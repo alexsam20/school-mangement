@@ -117,7 +117,7 @@
                 <img src="{{ url('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-{{--                <a href="#" class="d-block">{{ Auth::user()->name }}</a>--}}
+                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
 
@@ -126,7 +126,7 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
 
-{{--                @if(\Illuminate\Support\Facades\Auth::user()->user_type == 1)--}}
+                @if(\Illuminate\Support\Facades\Auth::user()->user_type == 1)
                     <li class="nav-item">
                         <a href="{{ url('admin/dashboard') }}" class="nav-link @if(Request::segment(2) == 'dashboard') active @endif">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -143,15 +143,15 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{ url('admin/schoolclass/list') }}" class="nav-link @if(Request::segment(2) == 'class') active @endif">
-                            <i class="nav-icon far fa-user"></i>
-                            <p>
-                                Class
-                            </p>
-                        </a>
-                    </li>
-{{--                @elseif(\Illuminate\Support\Facades\Auth::user()->user_type == 2)--}}
+{{--                    <li class="nav-item">--}}
+{{--                        <a href="{{ url('admin/schoolclass/list') }}" class="nav-link @if(Request::segment(2) == 'class') active @endif">--}}
+{{--                            <i class="nav-icon far fa-user"></i>--}}
+{{--                            <p>--}}
+{{--                                Class--}}
+{{--                            </p>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+                @elseif(\Illuminate\Support\Facades\Auth::user()->user_type == 2)
                     <li class="nav-item">
                         <a href="{{ url('teacher/dashboard') }}" class="nav-link @if(Request::segment(2) == 'dashboard') active @endif">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -160,7 +160,7 @@
                             </p>
                         </a>
                     </li>
-{{--                @elseif(\Illuminate\Support\Facades\Auth::user()->user_type == 3)--}}
+                @elseif(\Illuminate\Support\Facades\Auth::user()->user_type == 3)
                     <li class="nav-item">
                         <a href="{{ url('student/dashboard') }}" class="nav-link @if(Request::segment(2) == 'dashboard') active @endif">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -169,7 +169,7 @@
                             </p>
                         </a>
                     </li>
-{{--                @elseif(\Illuminate\Support\Facades\Auth::user()->user_type == 4)--}}
+                @elseif(\Illuminate\Support\Facades\Auth::user()->user_type == 4)
                     <li class="nav-item">
                         <a href="{{ url('parent/dashboard') }}" class="nav-link @if(Request::segment(2) == 'dashboard') active @endif">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -178,8 +178,7 @@
                             </p>
                         </a>
                     </li>
-{{--                @endif--}}
-
+                @endif
 
                 <li class="nav-item">
                     <a href="{{ url('logout') }}" class="nav-link">
