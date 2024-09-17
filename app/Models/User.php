@@ -44,4 +44,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public static function getEmailSingle($email)
+    {
+        return self::where('email', $email)->first();
+    }
+
+    public static function getTokenSingle($remember_token)
+    {
+        return self::where('remember_token', $remember_token)->first();
+    }
 }

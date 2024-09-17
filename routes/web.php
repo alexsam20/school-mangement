@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [AuthController::class, 'login']);
 Route::post('login', [AuthController::class, 'authLogin']);
 Route::get('logout', [AuthController::class, 'logout']);
+Route::get('forgot-password', [AuthController::class, 'forgotPassword']);
+Route::post('forgot-password', [AuthController::class, 'PostForgotPassword']);
+Route::get('reset/{token}', [AuthController::class, 'reset']);
+Route::post('reset/{token}', [AuthController::class, 'passwordReset']);
 
 Route::get('admin/dashboard', function () {
     return view('admin.dashboard');
