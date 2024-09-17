@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'user_type',
+        'is_delete',
     ];
 
     /**
@@ -66,7 +68,7 @@ class User extends Authenticatable
             $query = $query->whereDate('created_at', '=', Request::get('date'));
         }
         $query = $query->orderBy('id', 'desc')
-            ->paginate(20);
+            ->paginate(2);
 
         return $query;
     }
