@@ -9,7 +9,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-{{--                        <h1>Admin List (Total: {{ $getRecords->total() }})</h1>--}}
+                        <h1>Admin List (Total: {{ $getRecords->total() }})</h1>
                     </div>
                     <div class="col-sm-6" style="text-align: right;">
                         <a href="{{ url('admin/admin/add') }}" class="btn btn-primary">Add New Admin</a>
@@ -57,7 +57,7 @@
 {{--                            </form>--}}
 {{--                        </div>--}}
                         <!-- /.card -->
-{{--                        @include('_message')--}}
+                        @include('_message')
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Admin List</h3>
@@ -75,20 +75,20 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-{{--                                    @foreach($getRecords as $record)--}}
-{{--                                        <tr>--}}
-{{--                                            <td>{{$record->id}}</td>--}}
-{{--                                            <td>{{$record->name}}</td>--}}
-{{--                                            <td>{{$record->email}}</td>--}}
-{{--                                            <td>{{date('M d, Y H:i A', strtotime($record->created_at))}}</td>--}}
-{{--                                            <td>--}}
-{{--                                                <a href="{{ url('admin/admin/edit/' . $record->id) }}"--}}
-{{--                                                   class="btn btn-primary">Edit</a>--}}
-{{--                                                <a href="{{ url('admin/admin/delete/' . $record->id) }}"--}}
-{{--                                                   class="btn btn-danger">Delete</a>--}}
-{{--                                            </td>--}}
-{{--                                        </tr>--}}
-{{--                                    @endforeach--}}
+                                    @foreach($getRecords as $record)
+                                        <tr>
+                                            <td>{{$record->id}}</td>
+                                            <td>{{$record->name}}</td>
+                                            <td>{{$record->email}}</td>
+                                            <td>{{date('M d, Y H:i A', strtotime($record->created_at))}}</td>
+                                            <td>
+                                                <a href="{{ url('admin/admin/edit/' . $record->id) }}"
+                                                   class="btn btn-primary">Edit</a>
+                                                <a href="{{ url('admin/admin/delete/' . $record->id) }}"
+                                                   class="btn btn-danger">Delete</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                                 <div style="padding: 10px 10px 0 10px; float: right;">
