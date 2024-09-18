@@ -56,8 +56,8 @@ class User extends Authenticatable
     public static function getRecords()
     {
         $query = self::select('users.*')
-            ->where('user_type', '=', 1)
-            ->where('is_delete', '=', 0);
+            ->where('user_type', 1)
+            ->where('is_delete', 0);
         if (!empty(Request::get('name'))) {
             $query = $query->where('name', 'like', '%' . Request::get('name') . '%');
         }
@@ -68,7 +68,7 @@ class User extends Authenticatable
             $query = $query->whereDate('created_at', '=', Request::get('date'));
         }
         $query = $query->orderBy('id', 'desc')
-            ->paginate(2);
+            ->paginate(20);
 
         return $query;
     }
