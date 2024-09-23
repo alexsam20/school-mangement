@@ -66,7 +66,6 @@ class ClassSubjectController extends Controller
         } else {
             abort(404);
         }
-
     }
 
     public function update(Request $request)
@@ -77,7 +76,7 @@ class ClassSubjectController extends Controller
             foreach ($request->subject_id as $subject_id) {
                 $getAlreadyFirst = ClassSubject::getAlreadyFirst($request->class_id, $subject_id);
                 if (!empty($getAlreadyFirst)) {
-                    $getAlreadyFirst->status = $request->staus;
+                    $getAlreadyFirst->status = $request->status;
                     $getAlreadyFirst->save();
                 } else {
                     $cls_sbj = new ClassSubject();
@@ -99,6 +98,42 @@ class ClassSubjectController extends Controller
         $cls_sbj->save();
 
         return redirect()->back()->with('success', 'Record deleted');
+    }
+
+    public function edit_single($id)
+    {
+        $getRecord = ClassSubject::getSingle($id);
+        if (!empty($getRecord)) {
+            $data['getRecord'] = $getRecord;
+            $data['getClass'] = ClassModel::getClass();
+            $data['getSubject'] = Subject::getSubject();
+            $data['header_title'] = 'Edit Assign Subject - ';
+
+            return view('admin.assign_subject.edit_single', $data);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function update_single($id, Request $request)
+    {
+                $getAlreadyFirst = ClassSubject::getAlreadyFirst($request->class_id, $request->subject_id);
+                if (!empty($getAlreadyFirst)) {
+                    $getAlreadyFirst->status = $request->status;
+                    $getAlreadyFirst->save();
+
+                    return redirect('admin/assign_subject/list')->with('success', 'Status Successfully Updated');
+                } else {
+                    $cls_sbj = ClassSubject::getSingle($id);
+                    $cls_sbj->class_id = $request->class_id;
+                    $cls_sbj->subject_id = $request->subject_id;
+                    $cls_sbj->status = $request->status;
+                    $cls_sbj->save();
+
+                    return redirect('admin/assign_subject/list')->with('success', 'Subject Successfully Assign to Class');
+                }
+
+
     }
 }
 
