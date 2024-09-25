@@ -39,7 +39,7 @@
                                     <div class="form-group">
                                         <label for="password">Password</label>
                                         <input type="text" class="form-control" name="password" placeholder="Password">
-                                        <p>Did you want to change password so please add new password</p>
+                                        <p>Due you want to change password so Please add new password</p>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->

@@ -22,8 +22,9 @@ Route::get('admin/admin/list', function () {
     return view('admin.admin.list');
 });
 
+// Admin position middleware
 Route::group(['middleware' => 'admin'], function () {
-    //admin
+    // admin
     Route::get('admin/dashboard', [DashboardController::class, 'dashboard']);
     Route::get('admin/admin/list', [AdminController::class, 'list']);
     Route::get('admin/admin/add', [AdminController::class, 'add']);
@@ -35,6 +36,9 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('admin/student/list', [StudentController::class, 'list']);
     Route::get('admin/student/add', [StudentController::class, 'add']);
     Route::post('admin/student/add', [StudentController::class, 'insert']);
+    Route::get('admin/student/edit/{id}', [StudentController::class, 'edit']);
+    Route::post('admin/student/edit/{id}', [StudentController::class, 'update']);
+    Route::get('admin/student/delete/{id}', [StudentController::class, 'delete']);
     // url class
     Route::get('admin/class/list', [ClassController::class, 'list']);
     Route::get('admin/class/add', [ClassController::class, 'add']);
@@ -63,18 +67,21 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('admin/change_password', [UserController::class, 'update_change_password']);
 });
 
+// Teacher position middleware
 Route::group(['middleware' => 'teacher'], function () {
     Route::get('teacher/dashboard', [DashboardController::class, 'dashboard']);
     Route::get('teacher/change_password', [UserController::class, 'change_password']);
     Route::post('teacher/change_password', [UserController::class, 'update_change_password']);
 });
 
+// Student position middleware
 Route::group(['middleware' => 'student'], function () {
     Route::get('student/dashboard', [DashboardController::class, 'dashboard']);
     Route::get('student/change_password', [UserController::class, 'change_password']);
     Route::post('student/change_password', [UserController::class, 'update_change_password']);
 });
 
+// Parent position middleware
 Route::group(['middleware' => 'parent'], function () {
     Route::get('parent/dashboard', [DashboardController::class, 'dashboard']);
     Route::get('parent/change_password', [UserController::class, 'change_password']);
