@@ -79,15 +79,49 @@ class User extends Authenticatable
             ->join('class', 'class.id', '=', 'users.class_id', 'left')
             ->where('users.user_type', 3)
             ->where('users.is_delete', 0);
-//        if (!empty(Request::get('name'))) {
-//            $query = $query->where('name', 'like', '%' . Request::get('name') . '%');
-//        }
-//        if (!empty(Request::get('email'))) {
-//            $query = $query->where('email', 'like', '%' . Request::get('email') . '%');
-//        }
-//        if (!empty(Request::get('date'))) {
-//            $query = $query->whereDate('created_at', '=', Request::get('date'));
-//        }
+        if (!empty(Request::get('name'))) {
+            $query = $query->where('users.name', 'like', '%' . Request::get('name') . '%');
+        }
+        if (!empty(Request::get('last_name'))) {
+            $query = $query->where('users.last_name', 'like', '%' . Request::get('last_name') . '%');
+        }
+        if (!empty(Request::get('email'))) {
+            $query = $query->where('users.email', 'like', '%' . Request::get('email') . '%');
+        }
+        if (!empty(Request::get('admission_name'))) {
+            $query = $query->where('users.admission_name', 'like', '%' . Request::get('admission_name') . '%');
+        }
+        if (!empty(Request::get('roll_number'))) {
+            $query = $query->where('users.roll_number', 'like', '%' . Request::get('roll_number') . '%');
+        }
+        if (!empty(Request::get('class_name'))) {
+            $query = $query->where('class.name', 'like', '%' . Request::get('class_name') . '%');
+        }
+        if (!empty(Request::get('gender'))) {
+            $query = $query->where('users.gender', 'like', '%' . Request::get('gender') . '%');
+        }
+        if (!empty(Request::get('caste'))) {
+            $query = $query->where('users.caste', 'like', '%' . Request::get('caste') . '%');
+        }
+        if (!empty(Request::get('religion'))) {
+            $query = $query->where('users.religion', 'like', '%' . Request::get('religion') . '%');
+        }
+        if (!empty(Request::get('mobile_number'))) {
+            $query = $query->where('users.mobile_number', 'like', '%' . Request::get('mobile_number') . '%');
+        }
+        if (!empty(Request::get('blood_group'))) {
+            $query = $query->where('users.blood_group', 'like', '%' . Request::get('blood_group') . '%');
+        }
+        if (!empty(Request::get('admission_date'))) {
+            $query = $query->whereDate('users.admission_date', '=', Request::get('admission_date'));
+        }
+        if (!empty(Request::get('created_at'))) {
+            $query = $query->whereDate('users.created_at', '=', Request::get('created_at'));
+        }
+        if (!empty(Request::get('status'))) {
+            $status = (Request::get('status') == 100) ? 0 : 1;
+            $query = $query->where('users.status', $status);
+        }
         $query = $query->orderBy('users.id', 'desc')
             ->paginate(20);
 

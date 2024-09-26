@@ -24,38 +24,127 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- general form elements -->
-                        {{--                        <div class="card">--}}
-                        {{--                            <div class="card-header">--}}
-                        {{--                                <h3 class="card-title">Search Student</h3>--}}
-                        {{--                            </div>--}}
-                        {{--                            <!-- form start -->--}}
-                        {{--                            <form method="get" action="">--}}
-                        {{--                                <div class="card-body">--}}
-                        {{--                                    <div class="row">--}}
-                        {{--                                        <div class="form-group col-md-3">--}}
-                        {{--                                            <label for="name">Name</label>--}}
-                        {{--                                            <input type="text" class="form-control" value="{{ \Illuminate\Support\Facades\Request::get('name') }}" name="name"--}}
-                        {{--                                                   placeholder="Enter name">--}}
-                        {{--                                        </div>--}}
-                        {{--                                        <div class="form-group col-md-3">--}}
-                        {{--                                            <label for="email">Email</label>--}}
-                        {{--                                            <input type="text" class="form-control" value="{{ \Illuminate\Support\Facades\Request::get('email') }}" name="email"--}}
-                        {{--                                                   placeholder="Enter email">--}}
-                        {{--                                        </div>--}}
-                        {{--                                        <div class="form-group col-md-3">--}}
-                        {{--                                            <label for="date">Date</label>--}}
-                        {{--                                            <input type="date" class="form-control" value="{{ \Illuminate\Support\Facades\Request::get('date') }}" name="date"--}}
-                        {{--                                                   placeholder="Enter date">--}}
-                        {{--                                        </div>--}}
-                        {{--                                        <div class="form-group col-md-3">--}}
-                        {{--                                            <button class="btn btn-primary" type="submit" style="margin-top: 30px">Search</button>--}}
-                        {{--                                            <a href="{{ url('admin/student/list') }}" class="btn btn-success" style="margin-top: 30px">Reset</a>--}}
-                        {{--                                        </div>--}}
-                        {{--                                    </div>--}}
-                        {{--                                </div>--}}
-                        {{--                                <!-- /.card-body -->--}}
-                        {{--                            </form>--}}
-                        {{--                        </div>--}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Search Student</h3>
+                            </div>
+                            <!-- form start -->
+                            <form method="get" action="">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="form-group col-md-2">
+                                            <label for="name">Name</label>
+                                            <input type="text" class="form-control"
+                                                   value="{{ \Illuminate\Support\Facades\Request::get('name') }}"
+                                                   name="name"
+                                                   placeholder="Enter Name">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="last_name">Last Name</label>
+                                            <input type="text" class="form-control"
+                                                   value="{{ \Illuminate\Support\Facades\Request::get('last_name') }}"
+                                                   name="last_name"
+                                                   placeholder="Enter Last Name">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="email">Email</label>
+                                            <input type="text" class="form-control"
+                                                   value="{{ \Illuminate\Support\Facades\Request::get('email') }}"
+                                                   name="email"
+                                                   placeholder="Enter email">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="admission_name">Admission Number</label>
+                                            <input type="text" class="form-control"
+                                                   value="{{ \Illuminate\Support\Facades\Request::get('admission_name') }}"
+                                                   name="admission_name"
+                                                   placeholder="Enter Admission Number">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="roll_number">Roll Number</label>
+                                            <input type="text" class="form-control"
+                                                   value="{{ \Illuminate\Support\Facades\Request::get('roll_number') }}"
+                                                   name="roll_number"
+                                                   placeholder="Enter Roll Number">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="class_name">Class Name</label>
+                                            <input type="text" class="form-control"
+                                                   value="{{ \Illuminate\Support\Facades\Request::get('class_name') }}"
+                                                   name="class_name"
+                                                   placeholder="Enter Class Name">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="gender">Gender</label>
+                                            <select class="form-control" name="gender">
+                                                <option value="">Select Gender</option>
+                                                <option {{ (\Illuminate\Support\Facades\Request::get('gender') == 'Male' ? 'selected' : '') }} value="Male">Male</option>
+                                                <option {{ (\Illuminate\Support\Facades\Request::get('gender') == 'Female' ? 'selected' : '') }} value="Female">Female</option>
+                                                <option {{ (\Illuminate\Support\Facades\Request::get('gender') == '0ther' ? 'selected' : '') }} value="0ther">0ther</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="caste">Caste</label>
+                                            <input type="text" class="form-control"
+                                                   value="{{ \Illuminate\Support\Facades\Request::get('caste') }}"
+                                                   name="caste"
+                                                   placeholder="Enter Caste">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="religion">Religion</label>
+                                            <input type="text" class="form-control"
+                                                   value="{{ \Illuminate\Support\Facades\Request::get('religion') }}"
+                                                   name="religion"
+                                                   placeholder="Enter Religion">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="mobile_number">Mobile Number</label>
+                                            <input type="text" class="form-control"
+                                                   value="{{ \Illuminate\Support\Facades\Request::get('mobile_number') }}"
+                                                   name="mobile_number"
+                                                   placeholder="Enter Mobile Phone Number">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="blood_group">Blood Group</label>
+                                            <input type="text" class="form-control"
+                                                   value="{{ \Illuminate\Support\Facades\Request::get('blood_group') }}"
+                                                   name="blood_group"
+                                                   placeholder="Enter Blood Group">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="status">Status</label>
+                                            <select class="form-control" name="status">
+                                                <option value="">Select Status</option>
+                                                <option {{ (\Illuminate\Support\Facades\Request::get('status') == 100 ? 'selected' : '') }} value="0">Active</option>
+                                                <option {{ (\Illuminate\Support\Facades\Request::get('status') == 1 ? 'selected' : '') }} value="1">Inactive</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="admission_date">Admission Date</label>
+                                            <input type="date" class="form-control"
+                                                   value="{{ \Illuminate\Support\Facades\Request::get('admission_date') }}"
+                                                   name="admission_date"
+                                                   placeholder="Enter Admission Date">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="created_at">Created Date</label>
+                                            <input type="date" class="form-control"
+                                                   value="{{ \Illuminate\Support\Facades\Request::get('created_at') }}"
+                                                   name="created_at"
+                                                   placeholder="Enter date">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <button class="btn btn-primary" type="submit" style="margin-top: 30px">
+                                                Search
+                                            </button>
+                                            <a href="{{ url('admin/student/list') }}" class="btn btn-success"
+                                               style="margin-top: 30px">Reset</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </form>
+                        </div>
                         <!-- /.card -->
                         @include('_message')
                         <div class="card">
@@ -121,7 +210,7 @@
                                             <td>{{$record->height}}</td>
                                             <td>{{$record->weight}}</td>
                                             <td>{{($record->status == 0) ? 'Active' : 'Inactive'}}</td>
-                                            <td>{{date('M d, Y H:i A', strtotime($record->created_at))}}</td>
+                                            <td>{{date('d m Y H i', strtotime($record->created_at))}}</td>
                                             <td style="min-width: 150px">
                                                 <a href="{{ url('admin/student/edit/' . $record->id) }}"
                                                    class="btn btn-primary btn-sm">Edit</a>
