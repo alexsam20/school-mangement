@@ -30,14 +30,14 @@ class StudentController extends Controller
             'name' => 'required|max:75|min:3',
             'last_name' => 'required|max:80|min:3',
             'email' => 'required|email|unique:users',
-            'height' => 'max:10|min:2',
-            'weight' => 'max:10|min:2',
-            'blood_group' => 'max:10|min:2',
+            'height' => 'max:10',
+            'weight' => 'max:10',
+            'blood_group' => 'max:10',
             'mobile_number' => 'max:15|min:8',
-            'admission_name' => 'max:50|min:2',
-            'roll_number' => 'max:50|min:2',
-            'caste' => 'max:50|min:2',
-            'religion' => 'max:50|min:2',
+            'admission_name' => 'max:50',
+            'roll_number' => 'max:50',
+            'caste' => 'max:50',
+            'religion' => 'max:50',
             'password' => 'max:50|min:3',
         ]);
 
@@ -60,7 +60,7 @@ class StudentController extends Controller
         if (!empty($request->file('profile_pic'))) {
             $ext = $request->file('profile_pic')->getClientOriginalExtension();
             $file = $request->file('profile_pic');
-            $randomStr = date('Ymdhis') . Str::random(20);
+            $randomStr = date('YmdHis') . Str::random(20);
             $filename = strtolower($randomStr) . '.' . $ext;
             $file->move('upload/profile/', $filename);
             $student->profile_pic = $filename;
@@ -96,14 +96,14 @@ class StudentController extends Controller
             'name' => 'required|max:75|min:3',
             'last_name' => 'required|max:80|min:3',
             'email' => 'required|email|unique:users,email,' . $id,
-            'height' => 'max:10|min:2',
-            'weight' => 'max:10|min:2',
-            'blood_group' => 'max:10|min:2',
+            'height' => 'max:10',
+            'weight' => 'max:10',
+            'blood_group' => 'max:10',
             'mobile_number' => 'max:15|min:8',
-            'admission_name' => 'max:50|min:2',
-            'roll_number' => 'max:50|min:2',
-            'caste' => 'max:50|min:2',
-            'religion' => 'max:50|min:2',
+            'admission_name' => 'max:50',
+            'roll_number' => 'max:50',
+            'caste' => 'max:50',
+            'religion' => 'max:50',
         ]);
 
         $student = User::getSingle($id);
@@ -128,7 +128,7 @@ class StudentController extends Controller
             }
             $ext = $request->file('profile_pic')->getClientOriginalExtension();
             $file = $request->file('profile_pic');
-            $randomStr = date('Ymdhis') . Str::random(20);
+            $randomStr = date('YmdHis') . Str::random(20);
             $filename = strtolower($randomStr) . '.' . $ext;
             $file->move('upload/profile/', $filename);
             $student->profile_pic = $filename;
