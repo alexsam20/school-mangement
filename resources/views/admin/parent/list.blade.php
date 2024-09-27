@@ -157,6 +157,8 @@
                                                    class="btn btn-primary">Edit</a>
                                                 <a href="{{ url('admin/parent/delete/' . $record->id) }}"
                                                    class="btn btn-danger">Delete</a>
+                                                <a href="{{ url('admin/parent/my-student/' . $record->id) }}"
+                                                   class="btn btn-primary">My student</a>
                                             </td>
                                         </tr>
                                     @endforeach

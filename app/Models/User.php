@@ -114,7 +114,8 @@ class User extends Authenticatable
 
     public static function getStudent()
     {
-        $query = self::select('users.*', 'class.name as class_name')
+        $query = self::select('users.*', 'class.name as class_name', 'parent.name as parent_name', 'parent.last_name as parent_last_name')
+            ->join('users as parent', 'parent.id', '=', 'users.parent_id', 'left')
             ->join('class', 'class.id', '=', 'users.class_id', 'left')
             ->where('users.user_type', 3)
             ->where('users.is_delete', 0);
@@ -165,6 +166,48 @@ class User extends Authenticatable
             ->paginate(20);
 
         return $query;
+    }
+
+    public static function getSearchStudent()
+    {
+        if (!empty(Request::get('id')) || !empty(Request::get('name')) ||
+            !empty(Request::get('last_name')) || !empty(Request::get('email'))) {
+
+            $query = self::select('users.*', 'class.name as class_name', 'parent.name as parent_name', 'parent.last_name as parent_last_name')
+                ->join('users as parent', 'parent.id', '=', 'users.parent_id', 'left')
+                ->join('class', 'class.id', '=', 'users.class_id', 'left')
+                ->where('users.user_type', 3)
+                ->where('users.is_delete', 0);
+            if (!empty(Request::get('id'))) {
+                $query = $query->where('users.id', Request::get('id'));
+            }
+            if (!empty(Request::get('name'))) {
+                $query = $query->where('users.name', 'like', '%' . Request::get('name') . '%');
+            }
+            if (!empty(Request::get('last_name'))) {
+                $query = $query->where('users.last_name', 'like', '%' . Request::get('last_name') . '%');
+            }
+            if (!empty(Request::get('email'))) {
+                $query = $query->where('users.email', 'like', '%' . Request::get('email') . '%');
+            }
+            $query = $query->orderBy('users.id', 'desc')
+                ->limit(50)
+                ->get();
+
+            return $query;
+        }
+    }
+
+    public static function getMyStudent($parent_id)
+    {
+        return self::select('users.*', 'class.name as class_name', 'parent.name as parent_name', 'parent.last_name as parent_last_name')
+                ->join('users as parent', 'parent.id', '=', 'users.parent_id', 'left')
+                ->join('class', 'class.id', '=', 'users.class_id', 'left')
+                ->where('users.user_type', 3)
+                ->where('users.parent_id', $parent_id)
+                ->where('users.is_delete', 0)
+                ->orderBy('users.id', 'desc')
+                ->get();
     }
 
     public static function getEmailSingle($email)

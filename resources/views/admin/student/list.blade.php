@@ -158,7 +158,8 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Profile Pic</th>
-                                        <th>Name</th>
+                                        <th>Student Name</th>
+                                        <th>Parent Name</th>
                                         <th>Email</th>
                                         <th>Admission Name</th>
                                         <th>Roll Number</th>
@@ -188,6 +189,7 @@
                                                 @endif
                                             </td>
                                             <td>{{$record->name}} {{$record->last_name}}</td>
+                                            <td>{{$record->parent_name}} {{$record->parent_last_name}}</td>
                                             <td>{{$record->email}}</td>
                                             <td>{{$record->admission_name}}</td>
                                             <td>{{$record->roll_number}}</td>
