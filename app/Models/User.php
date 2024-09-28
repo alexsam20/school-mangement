@@ -73,6 +73,49 @@ class User extends Authenticatable
         return $query;
     }
 
+    public static function getTeacher()
+    {
+        $query = self::select('users.*')
+            ->where('user_type', 2)
+            ->where('is_delete', 0);
+
+        if (!empty(Request::get('name'))) {
+            $query = $query->where('users.name', 'like', '%' . Request::get('name') . '%');
+        }
+        if (!empty(Request::get('last_name'))) {
+            $query = $query->where('users.last_name', 'like', '%' . Request::get('last_name') . '%');
+        }
+        if (!empty(Request::get('email'))) {
+            $query = $query->where('users.email', 'like', '%' . Request::get('email') . '%');
+        }
+        if (!empty(Request::get('gender'))) {
+            $query = $query->where('users.gender', Request::get('gender'));
+        }
+        if (!empty(Request::get('mobile_number'))) {
+            $query = $query->where('users.mobile_number', 'like', '%' . Request::get('mobile_number') . '%');
+        }
+        if (!empty(Request::get('marital_status'))) {
+            $query = $query->where('users.marital_status', 'like', '%' . Request::get('marital_status') . '%');
+        }
+        if (!empty(Request::get('address'))) {
+            $query = $query->where('users.address', 'like', '%' . Request::get('address') . '%');
+        }
+        if (!empty(Request::get('admission_date'))) {
+            $query = $query->whereDate('users.admission_date', '=', Request::get('admission_date'));
+        }
+        if (!empty(Request::get('created_at'))) {
+            $query = $query->whereDate('users.created_at', Request::get('created_at'));
+        }
+        if (!empty(Request::get('status'))) {
+            $status = (Request::get('status') == 100) ? 0 : 1;
+            $query = $query->where('users.status', $status);
+        }
+        $query = $query->orderBy('id', 'desc')
+            ->paginate(20);
+
+        return $query;
+    }
+
     public static function getParent()
     {
         $query = self::select('users.*')
