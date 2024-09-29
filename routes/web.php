@@ -107,6 +107,8 @@ Route::group(['middleware' => 'student'], function () {
 // Parent position middleware
 Route::group(['middleware' => 'parent'], function () {
     Route::get('parent/dashboard', [DashboardController::class, 'dashboard']);
+    Route::get('parent/account', [UserController::class, 'myAccount']);
+    Route::post('parent/account', [UserController::class, 'updateMyAccountParent']);
     Route::get('parent/change_password', [UserController::class, 'change_password']);
     Route::post('parent/change_password', [UserController::class, 'update_change_password']);
 });

@@ -14,13 +14,12 @@ class UserController extends Controller
     {
         $data['getRecord'] = User::getSingle(Auth::user()->id);
         $data['header_title'] = 'My Account - ';
-        if (Auth::user()->user_type == 2) {
-            return view('teacher.my_account', $data);
-        } elseif (Auth::user()->user_type == 3) {
-            return view('student.my_account', $data);
-        }
 
-
+        return match ((int)Auth::user()->user_type) {
+            2 => view('teacher.my_account', $data),
+            3 => view('student.my_account', $data),
+            4 => view('parent.my_account', $data)
+        };
     }
 
     public function updateMyAccount(Request $request)
@@ -109,6 +108,43 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'Account successfully updated');
     }
+
+    public function updateMyAccountParent(Request $request)
+    {
+        $id = Auth::user()->id;
+        $request->validate([
+            'name' => 'required|max:75|min:3',
+            'last_name' => 'required|max:80|min:3',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'address' => 'required|max:255|min:3',
+            'occupation' => 'max:200',
+            'mobile_number' => 'max:15|min:8',
+        ]);
+
+        $parent = User::getSingle($id);
+        $parent->name = trim($request->name);
+        $parent->last_name = trim($request->last_name);
+        $parent->gender = trim($request->gender);
+        $parent->occupation = trim($request->occupation);
+        $parent->address = trim($request->address);
+        $parent->mobile_number = trim($request->mobile_number);
+        if (!empty($request->file('profile_pic'))) {
+            if (!empty($parent->getProfile())) {
+                unlink('upload/profile/' . $parent->profile_pic);
+            }
+            $ext = $request->file('profile_pic')->getClientOriginalExtension();
+            $file = $request->file('profile_pic');
+            $randomStr = date('YmdHis') . Str::random(20);
+            $filename = strtolower($randomStr) . '.' . $ext;
+            $file->move('upload/profile/', $filename);
+            $parent->profile_pic = $filename;
+        }
+        $parent->email = trim($request->email);
+        $parent->save();
+
+        return redirect()->back()->with('success', 'Account successfully updated');
+    }
+
     public function change_password()
     {
         $data['header_title'] = 'Change Password - ';
