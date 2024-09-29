@@ -101,6 +101,9 @@ class TeacherController extends Controller
             $teacher->admission_date = trim($request->admission_date);
         }
         if (!empty($request->file('profile_pic'))) {
+            if (!empty($teacher->getProfile())) {
+                unlink('upload/profile/' . $teacher->profile_pic);
+            }
             $ext = $request->file('profile_pic')->getClientOriginalExtension();
             $file = $request->file('profile_pic');
             $randomStr = date('YmdHis') . Str::random(20);
