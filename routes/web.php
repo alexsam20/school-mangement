@@ -89,6 +89,8 @@ Route::group(['middleware' => 'admin'], function () {
 // Teacher position middleware
 Route::group(['middleware' => 'teacher'], function () {
     Route::get('teacher/dashboard', [DashboardController::class, 'dashboard']);
+    Route::get('teacher/account', [UserController::class, 'myAccount']);
+    Route::post('teacher/account', [UserController::class, 'updateMyAccount']);
     Route::get('teacher/change_password', [UserController::class, 'change_password']);
     Route::post('teacher/change_password', [UserController::class, 'update_change_password']);
 });
