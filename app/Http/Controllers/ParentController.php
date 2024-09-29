@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -128,6 +129,15 @@ class ParentController extends Controller
         $data['getRecord'] = User::getMyStudent($id);
         $data['header_title'] = 'Parent Student List - ';
         return view('admin.parent.my_student', $data);
+    }
+
+    public function myStudentParent()
+    {
+        $id = Auth::user()->id;
+        $data['getRecord'] = User::getMyStudent($id);
+        $data['header_title'] = 'My Student - ';
+
+        return view('parent.my_student', $data);
     }
 
     public function AssignStudentParent($student_id, $parent_id)
