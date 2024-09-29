@@ -16,10 +16,27 @@ class UserController extends Controller
         $data['header_title'] = 'My Account - ';
 
         return match ((int)Auth::user()->user_type) {
+            1 => view('admin.my_account', $data),
             2 => view('teacher.my_account', $data),
             3 => view('student.my_account', $data),
             4 => view('parent.my_account', $data)
         };
+    }
+
+    public function updateMyAccountAdmin(Request $request)
+    {
+        $id = Auth::user()->id;
+        $request->validate([
+            'name' => 'required|max:75|min:3',
+            'email' => 'required|email|unique:users,email,' . $id,
+        ]);
+
+        $admin = User::getSingle($id);
+        $admin->name = trim($request->name);
+        $admin->email = trim($request->email);
+        $admin->save();
+
+        return redirect()->back()->with('success', 'Account successfully updated');
     }
 
     public function updateMyAccount(Request $request)
