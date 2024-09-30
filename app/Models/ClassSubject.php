@@ -41,6 +41,19 @@ class ClassSubject extends Model
         return $records;
     }
 
+    public static function mySubject($class_id)
+    {
+        return self::select('class_subject.*', 'subjects.name as subject_name', 'subjects.type as subjects_type')
+            ->join('subjects', 'subjects.id', '=', 'class_subject.subject_id')
+            ->join('class', 'class.id', '=', 'class_subject.class_id')
+            ->join('users', 'users.id', '=', 'class_subject.created_by')
+            ->where('class_subject.class_id', $class_id)
+            ->where('class_subject.is_delete', 0)
+            ->where('class_subject.status', 0)
+            ->orderBy('class_subject.id', 'desc')
+            ->get();
+    }
+
     public static function getAlreadyFirst(mixed $class_id, mixed $subject_id)
     {
         return self::where('class_id', $class_id)

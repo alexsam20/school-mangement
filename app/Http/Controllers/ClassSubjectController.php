@@ -29,7 +29,7 @@ class ClassSubjectController extends Controller
 
     public function insert(Request $request)
     {
-        if (!empty($request->subject_id && is_numeric($request->class_id))) {
+        if (!empty($request->subject_id)) {
             foreach ($request->subject_id as $subject_id) {
                 $getAlreadyFirst = ClassSubject::getAlreadyFirst($request->class_id, $subject_id);
                 if (!empty($getAlreadyFirst)) {
