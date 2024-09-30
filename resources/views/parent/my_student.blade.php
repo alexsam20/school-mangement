@@ -47,6 +47,7 @@
                                         <th>Height</th>
                                         <th>Weight</th>
                                         <th>Created Date</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -81,6 +82,7 @@
                                             <td>{{$record->height}}</td>
                                             <td>{{$record->weight}}</td>
                                             <td>{{date('d-m-Y H:i', strtotime($record->created_at))}}</td>
+                                            <td><a class="btn btn-primary btn-sm" href="{{ url('parent/my_student/subject/' . $record->id) }}">Subject</a></td>
                                         </tr>
                                     @endforeach
                                     </tbody>
