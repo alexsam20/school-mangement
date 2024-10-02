@@ -33,13 +33,13 @@ class ClassSubjectController extends Controller
             foreach ($request->subject_id as $subject_id) {
                 $getAlreadyFirst = ClassSubject::getAlreadyFirst($request->class_id, $subject_id);
                 if (!empty($getAlreadyFirst)) {
-                    $getAlreadyFirst->status = $request->staus;
+                    $getAlreadyFirst->status = (int)$request->staus;
                     $getAlreadyFirst->save();
                 } else {
                     $cls_sbj = new ClassSubject();
                     $cls_sbj->class_id = $request->class_id;
                     $cls_sbj->subject_id = $subject_id;
-                    $cls_sbj->status = $request->status;
+                    $cls_sbj->status = (int)$request->status;
                     $cls_sbj->created_by = Auth::user()->id;
                     $cls_sbj->save();
                 }

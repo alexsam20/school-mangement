@@ -192,6 +192,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ url('admin/assign_class_teacher/list') }}" class="nav-link @if(Request::segment(2) == 'assignClassTeacher') active @endif">
+                            <i class="nav-icon far fa-user"></i>
+                            <p>
+                                Assign Class Teacher
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ url('admin/account') }}" class="nav-link @if(Request::segment(2) == 'account') active @endif">
                             <i class="nav-icon far fa-user"></i>
                             <p>

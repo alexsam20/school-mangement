@@ -116,6 +116,15 @@ class User extends Authenticatable
         return $query;
     }
 
+    public static function getTeacherClass()
+    {
+        return self::select('users.*')
+            ->where('user_type', 2)
+            ->where('is_delete', 0)
+            ->orderBy('id', 'desc')
+            ->get();
+    }
+
     public static function getParent()
     {
         $query = self::select('users.*')
@@ -244,13 +253,13 @@ class User extends Authenticatable
     public static function getMyStudent($parent_id)
     {
         return self::select('users.*', 'class.name as class_name', 'parent.name as parent_name', 'parent.last_name as parent_last_name')
-                ->join('users as parent', 'parent.id', '=', 'users.parent_id')
-                ->join('class', 'class.id', '=', 'users.class_id', 'left')
-                ->where('users.user_type', 3)
-                ->where('users.parent_id', $parent_id)
-                ->where('users.is_delete', 0)
-                ->orderBy('users.id', 'desc')
-                ->get();
+            ->join('users as parent', 'parent.id', '=', 'users.parent_id')
+            ->join('class', 'class.id', '=', 'users.class_id', 'left')
+            ->where('users.user_type', 3)
+            ->where('users.parent_id', $parent_id)
+            ->where('users.is_delete', 0)
+            ->orderBy('users.id', 'desc')
+            ->get();
     }
 
     public static function getEmailSingle($email)
