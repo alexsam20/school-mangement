@@ -11,10 +11,9 @@ class AssignClassTeacher extends Model
 
     protected $table = 'assign_class_teacher';
 
-    public static function getAlreadyFirst(mixed $class_id, mixed $teacher_id)
+    public static function getSingle($id)
     {
-        return self::where('class_id', $class_id)
-            ->where('teacher_id', $teacher_id)->first();
+        return self::find($id);
     }
 
     public static function getRecords()
@@ -26,5 +25,22 @@ class AssignClassTeacher extends Model
             ->where('assign_class_teacher.is_delete', 0)
             ->orderBy('assign_class_teacher.id', 'desc')
             ->paginate(20);
+    }
+
+    public static function getAlreadyFirst(mixed $class_id, mixed $teacher_id)
+    {
+        return self::where('class_id', $class_id)
+            ->where('teacher_id', $teacher_id)->first();
+    }
+
+    public static function getAssignTeacherID($class_id)
+    {
+        return self::where('class_id', $class_id)
+            ->where('is_delete', 0)->get();
+    }
+
+    public static function deleteTeacher(mixed $class_id)
+    {
+        return self::where('class_id', $class_id)->delete();
     }
 }

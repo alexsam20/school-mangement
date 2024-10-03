@@ -60,12 +60,12 @@
                                             <td>{{$record->created_by_name}}</td>
                                             <td>{{date('M d, Y H:i A', strtotime($record->created_at))}}</td>
                                             <td>
-{{--                                                <a href="{{ url('admin/assign_subject/edit/' . $record->id) }}"--}}
-{{--                                                   class="btn btn-primary">Edit</a>--}}
-{{--                                                <a href="{{ url('admin/assign_subject/edit_single/' . $record->id) }}"--}}
-{{--                                                   class="btn btn-primary">Edit Single</a>--}}
-{{--                                                <a href="{{ url('admin/assign_subject/delete/' . $record->id) }}"--}}
-{{--                                                   class="btn btn-danger">Delete</a>--}}
+                                                <a href="{{ url('admin/assign_class_teacher/edit/' . $record->id) }}"
+                                                   class="btn btn-primary">Edit</a>
+                                                <a href="{{ url('admin/assign_class_teacher/edit_single/' . $record->id) }}"
+                                                   class="btn btn-primary">Edit Single</a>
+                                                <a href="{{ url('admin/assign_class_teacher/delete/' . $record->id) }}"
+                                                   class="btn btn-danger">Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach
