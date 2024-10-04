@@ -41,6 +41,22 @@ class AssignClassTeacher extends Model
         return $query->orderBy('assign_class_teacher.id', 'desc')->paginate(20);
     }
 
+    public static function getMyClassSubject($teacher_id)
+    {
+        return self::select('assign_class_teacher.*', 'class.name as class_name', 'subjects.name as subject_name', 'subjects.type as subject_type')
+            ->join('class', 'class.id', 'assign_class_teacher.class_id')
+            ->join('class_subject', 'class_subject.class_id', 'class.id')
+            ->join('subjects', 'subjects.id', 'class_subject.subject_id')
+            ->where('assign_class_teacher.status', 0)
+            ->where('assign_class_teacher.is_delete', 0)
+            ->where('subjects.status', 0)
+            ->where('subjects.is_delete', 0)
+            ->where('class_subject.status', 0)
+            ->where('class_subject.is_delete', 0)
+            ->where('assign_class_teacher.teacher_id', $teacher_id)
+            ->get();
+    }
+
     public static function getAlreadyFirst(mixed $class_id, mixed $teacher_id)
     {
         return self::where('class_id', $class_id)

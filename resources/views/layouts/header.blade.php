@@ -225,6 +225,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ url('teacher/my_class_subject') }}" class="nav-link @if(Request::segment(2) == 'my_class_subject') active @endif">
+                            <i class="nav-icon far fa-user"></i>
+                            <p>
+                                My Class & Subject
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ url('teacher/account') }}" class="nav-link @if(Request::segment(2) == 'account') active @endif">
                             <i class="nav-icon far fa-user"></i>
                             <p>
