@@ -35,10 +35,8 @@ class ClassSubject extends Model
             $records = $records->whereDate('class_subject.created_at', '=', Request::get('date'));
         }
 
-        $records = $records->orderBy('class_subject.id', 'desc')
+        return $records->orderBy('class_subject.id', 'desc')
             ->paginate(20);
-
-        return $records;
     }
 
     public static function mySubject($class_id)

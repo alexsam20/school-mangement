@@ -28,23 +28,17 @@ class ClassModel extends Model
         if (!empty(Request::get('date'))) {
             $query = $query->whereDate('class.created_at', '=', Request::get('date'));
         }
-        $query = $query->orderBy('class.id', 'desc')
+        return $query->orderBy('class.id', 'desc')
             ->paginate(20);
-
-
-        return $query;
     }
 
     public static function getClass()
     {
-        $query = self::select('class.*')
+        return self::select('class.*')
             ->join('users', 'users.id', 'class.created_by')
             ->where('class.is_delete', 0)
             ->where('class.status', 0)
             ->orderBy('class.name', 'asc')
             ->get();
-
-
-        return $query;
     }
 }
