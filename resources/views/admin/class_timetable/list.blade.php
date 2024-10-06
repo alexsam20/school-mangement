@@ -93,13 +93,13 @@
                                                         {{$day['week_name']}}
                                                     </th>
                                                     <td>
-                                                        <input type="time" name="timetable[{{$i}}][start_time]" value="{{ $day['start_time'] }}" class="form-control">
+                                                        <input type="time" name="timetable[{{$i}}][start_time]" value="{{ $day[0]['start_time'] }}" class="form-control">
                                                     </td>
                                                     <td>
-                                                        <input type="time" name="timetable[{{$i}}][end_time]" value="{{ $day['end_time'] }}" class="form-control">
+                                                        <input type="time" name="timetable[{{$i}}][end_time]" value="{{ $day[0]['end_time'] }}" class="form-control">
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="timetable[{{$i}}][room_number]" value="{{ $day['room_number'] }}" class="form-control">
+                                                        <input type="text" name="timetable[{{$i}}][room_number]" value="{{ $day[0]['room_number'] }}" class="form-control">
                                                     </td>
                                                 </tr>
                                             @php $i++; @endphp

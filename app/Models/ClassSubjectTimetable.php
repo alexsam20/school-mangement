@@ -13,6 +13,8 @@ class ClassSubjectTimetable extends Model
 
     public static function getRecordClassSubject(mixed $class_id, mixed $subject_id, $week_id)
     {
-        return self::where('class_id', $class_id)->where('subject_id', $subject_id)->where('week_id', $week_id)->first();
+        return self::where('class_id', $class_id)
+            ->where('subject_id', $subject_id)
+            ->where('week_id', $week_id)->first();
     }
 }
