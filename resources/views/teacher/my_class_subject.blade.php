@@ -33,6 +33,7 @@
                                         <th>Class Name</th>
                                         <th>Subject Name</th>
                                         <th>Subject type</th>
+                                        <th>My Class Timetable</th>
                                         <th>Created Date</th>
                                         <th>Action</th>
                                     </tr>
@@ -43,6 +44,15 @@
                                             <td>{{$record->class_name}}</td>
                                             <td>{{$record->subject_name}}</td>
                                             <td>{{$record->subject_type}}</td>
+                                            <td>
+                                                @php $classSubject = $record->getMyTimetable($record->class_id, $record->subject_id); @endphp
+                                                @if(!empty($classSubject))
+                                                    <span class="badge bg-success">{{ date('h:i A', strtotime($classSubject->start_time)) }}</span> to
+                                                    <span class="badge bg-success">{{ date('h:i A', strtotime($classSubject->end_time)) }}</span>
+                                                    <br />
+                                                    Room number: <span class="badge bg-gradient-info">{{ $classSubject->room_number }}</span>
+                                                @endif
+                                            </td>
                                             <td>{{date('M d, Y H:i A', strtotime($record->created_at))}}</td>
                                             <td><a href="{{ url('teacher/my_class_subject/class_timetable/' . $record->class_id . '/' . $record->subject_id) }}" class="btn btn-primary">My Class Timetable</a></td>
                                         </tr>

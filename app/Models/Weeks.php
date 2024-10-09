@@ -15,4 +15,9 @@ class Weeks extends Model
     {
         return self::get();
     }
+
+    public static function getWeekUsingName(string $weekName)
+    {
+        return self::where('name', $weekName)->first();
+    }
 }

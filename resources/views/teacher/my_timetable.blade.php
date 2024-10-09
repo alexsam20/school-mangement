@@ -40,9 +40,17 @@
                                         @foreach($getRecords as $record)
                                             <tr>
                                                 <th>{{$record['week_name']}}</th>
-                                                <td>{{ (!empty($record['start_time'])) ? date('H:i A', strtotime($record['start_time'])) : '' }}</td>
-                                                <td>{{ (!empty($record['end_time'])) ? date('H:i A', strtotime($record['end_time'])) : '' }}</td>
-                                                <td>{{$record['room_number']}}</td>
+                                                <td>
+                                                    <span class="badge bg-success">
+                                                        {{ (!empty($record['start_time'])) ? date('H:i A', strtotime($record['start_time'])) : '' }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-gradient-info">
+                                                        {{ (!empty($record['end_time'])) ? date('H:i A', strtotime($record['end_time'])) : '' }}
+                                                    </span>
+                                                </td>
+                                                <td><span class="badge bg-warning">{{$record['room_number']}}</span></td>
                                             </tr>
                                         @endforeach
                                         </tbody>
