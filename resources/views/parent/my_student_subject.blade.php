@@ -40,6 +40,7 @@
                                         <tr>
                                             <td>{{$record->subject_name}}</td>
                                             <td>{{$record->subjects_type}}</td>
+                                            <td><a href="{{ url('parent/my_student/class_timetable/' . $record->class_id . '/' . $record->subject_id . '/' . $getUser->id) }}" class="btn btn-primary">My Class Timetable</a></td>
                                         </tr>
                                     @endforeach
                                     </tbody>

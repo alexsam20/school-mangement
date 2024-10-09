@@ -6,6 +6,7 @@ use App\Models\ClassModel;
 use App\Models\ClassSubject;
 use App\Models\ClassSubjectTimetable;
 use App\Models\Subject;
+use App\Models\User;
 use App\Models\Weeks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -140,5 +141,25 @@ class ClassTimetableController extends Controller
         $dataWeek['room_number'] = '';
 
         return $dataWeek;
+    }
+
+    public function myTimetableParent($class_id, $subject_id, $student_id)
+    {
+        $data['getClass'] = ClassModel::getSingle($class_id);
+        $data['getSubject'] = Subject::getSingle($subject_id);
+        $data['getStudent'] = User::getSingle($student_id);
+
+        $getWeek = Weeks::getRecords();
+        $result = [];
+        foreach ($getWeek as $day) {
+            $dataWeek = [];
+            $dataWeek['week_name'] = $day->name;
+            $timeAndRoom = $this->timesAndRoomFields($class_id, $subject_id, $day->id);
+            $result[] = array_merge($dataWeek, $timeAndRoom);
+        }
+        $data['getRecords'] = $result;
+        $data['header_title'] = 'My Timetable - ';
+
+        return view('parent.my_timetable', $data);
     }
 }
