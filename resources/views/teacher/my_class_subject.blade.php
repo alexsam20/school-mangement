@@ -34,6 +34,7 @@
                                         <th>Subject Name</th>
                                         <th>Subject type</th>
                                         <th>Created Date</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -43,6 +44,7 @@
                                             <td>{{$record->subject_name}}</td>
                                             <td>{{$record->subject_type}}</td>
                                             <td>{{date('M d, Y H:i A', strtotime($record->created_at))}}</td>
+                                            <td><a href="{{ url('teacher/my_class_subject/class_timetable/' . $record->class_id . '/' . $record->subject_id) }}" class="btn btn-primary">My Class Timetable</a></td>
                                         </tr>
                                     @endforeach
                                     </tbody>

@@ -113,6 +113,7 @@ Route::group(['middleware' => 'teacher'], function () {
     Route::post('teacher/change_password', [UserController::class, 'update_change_password']);
     Route::get('teacher/my_student', [StudentController::class, 'myStudent']);
     Route::get('teacher/my_class_subject', [AssignClassTeacherController::class, 'myClassSubject']);
+    Route::get('teacher/my_class_subject/class_timetable/{class_id}/{subject_id}', [ClassTimetableController::class, 'myTimetableTeacher']);
 });
 
 // Student position middleware

@@ -17,4 +17,10 @@ class ClassSubjectTimetable extends Model
             ->where('subject_id', $subject_id)
             ->where('week_id', $week_id)->first();
     }
+
+    public static function deleteRecordToInsertUpdate($request)
+    {
+        return self::where('class_id', $request->class_id)
+            ->where('subject_id', $request->subject_id)->delete();
+    }
 }

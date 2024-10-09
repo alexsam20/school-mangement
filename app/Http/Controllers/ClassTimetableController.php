@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ClassModel;
 use App\Models\ClassSubject;
 use App\Models\ClassSubjectTimetable;
+use App\Models\Subject;
 use App\Models\Weeks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,13 +50,9 @@ class ClassTimetableController extends Controller
 
     public function insert_update(Request $request)
     {
-        ClassSubjectTimetable::where('class_id', $request->class_id)->where('subject_id', $request->subject_id)->delete();
+        ClassSubjectTimetable::deleteRecordToInsertUpdate($request);
         foreach ($request->timetable as $timetable) {
-            if (!empty($timetable['week_id']) &&
-                !empty($timetable['start_time']) &&
-                !empty($timetable['end_time']) &&
-                !empty($timetable['room_number'])) {
-
+            if ($this->isVerifiedTimetable($timetable)) {
                 $record = new ClassSubjectTimetable();
                 $record->class_id = $request->class_id;
                 $record->subject_id = $request->subject_id;
@@ -68,6 +65,12 @@ class ClassTimetableController extends Controller
         }
 
         return redirect()->back()->with('success', 'Class Timetable Successfully Saved');
+    }
+
+    private function isVerifiedTimetable($timetable): bool
+    {
+        return !empty($timetable['week_id']) && !empty($timetable['start_time']) &&
+            !empty($timetable['end_time']) && !empty($timetable['room_number']);
     }
 
     public function myTimetable()
@@ -93,7 +96,26 @@ class ClassTimetableController extends Controller
         return view('student.my_timetable', $data);
     }
 
-    private function timesAndRoomFields($class, $subject, $weekDay)
+    public function myTimetableTeacher($class_id, $subject_id)
+    {
+        $data['getClass'] = ClassModel::getSingle($class_id);
+        $data['getSubject'] = Subject::getSingle($subject_id);
+
+        $getWeek = Weeks::getRecords();
+        $result = [];
+        foreach ($getWeek as $day) {
+            $dataWeek = [];
+            $dataWeek['week_name'] = $day->name;
+            $timeAndRoom = $this->timesAndRoomFields($class_id, $subject_id, $day->id);
+            $result[] = array_merge($dataWeek, $timeAndRoom);
+        }
+        $data['getRecords'] = $result;
+        $data['header_title'] = 'My Timetable - ';
+
+        return view('teacher.my_timetable', $data);
+    }
+
+    private function timesAndRoomFields($class, $subject, $weekDay): array
     {
         $classSubject = ClassSubjectTimetable::getRecordClassSubject($class, $subject, $weekDay);
         $dataWeek = [];
@@ -113,12 +135,9 @@ class ClassTimetableController extends Controller
     private function emptyTimesAndRoomFields()
     {
         $dataWeek = [];
-
         $dataWeek['start_time'] = '';
         $dataWeek['end_time'] = '';
-        $dataWeek['room_number'] = 'Jopa';
-
-        dd($dataWeek);
+        $dataWeek['room_number'] = '';
 
         return $dataWeek;
     }
