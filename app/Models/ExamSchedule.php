@@ -25,4 +25,24 @@ class ExamSchedule extends Model
             ->where('class_id', $class_id)
             ->delete();
     }
+
+    public static function getExam($class_id)
+    {
+        return self::select('exam_schedules.*', 'exams.name as exam_name')
+            ->join('exams', 'exams.id', 'exam_schedules.exam_id')
+            ->where('exam_schedules.class_id', $class_id)
+            ->groupBy('exam_schedules.exam_id')
+            ->orderBy('exam_schedules.id', 'desc')
+            ->get();
+    }
+
+    public static function getExamTimetable($examId, $classId)
+    {
+        return self::select('exam_schedules.*', 'subjects.name as subject_name', 'subjects.type as subject_type')
+            ->join('subjects', 'subjects.id', 'exam_schedules.subject_id')
+            ->where('exam_schedules.exam_id', $examId)
+            ->where('exam_schedules.class_id', $classId)
+            ->oldest()
+            ->get();
+    }
 }
