@@ -31,4 +31,13 @@ class Exam extends Model
     {
         return self::find($id);
     }
+
+    public static function getExam()
+    {
+        return self::select('exams.*')
+            ->join('users', 'users.id', 'exams.created_by')
+            ->where('exams.is_deleted', null)
+            ->orderBy('exams.name', 'asc')
+            ->get();
+    }
 }

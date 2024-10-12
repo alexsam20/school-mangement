@@ -225,6 +225,12 @@
                                     <p>Exam List</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ url('admin/examinations/exam_schedule') }}" class="nav-link @if(Request::segment(3) == 'exam_schedule') active @endif">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Exam Schedule</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item">
