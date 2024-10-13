@@ -28,7 +28,7 @@
                                 {{ @csrf_field() }}
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="Class name">Class Name</label>
+                                        <label for="class_id">Class Name</label>
                                         <select class="form-control" name="class_id" required>
                                             <option value="">Select Class</option>
                                             @foreach($getClass as $class)
@@ -37,12 +37,12 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="Subject name">Subject Name</label>
+                                        <label for="Subject name">Teacher Name</label>
                                             @foreach($getTeacher as $teacher)
                                                 <div>
-                                                    <label style="font-weight: normal">
-                                                    <input type="checkbox" value="{{ $teacher->id }}" name="teacher_id[]"> {{ $teacher->name }} {{ $teacher->last_name }}
-                                                    </label>
+                                                    <label for="teacher_id" style="font-weight: normal"></label>
+                                                    <input type="checkbox" value="{{ $teacher->id }}" name="teacher_id[]">&nbsp; {{ $teacher->name }} {{ $teacher->last_name }}
+
                                                 </div>
                                             @endforeach
                                     </div>
