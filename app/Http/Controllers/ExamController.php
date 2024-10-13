@@ -7,6 +7,7 @@ use App\Models\ClassModel;
 use App\Models\ClassSubject;
 use App\Models\Exam;
 use App\Models\ExamSchedule;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -219,5 +220,40 @@ class ExamController extends Controller
         $data['header_title'] = 'My Exam Timetable - ';
         $data['getRecords'] = $result;
         return view('teacher.my_exam_timetable', $data);
+    }
+
+    public function parentMyExamTimetable($student_id)
+    {
+        $getStudent = User::getSingle($student_id);
+        $classId = $getStudent->class_id;
+        $getExams = ExamSchedule::getExam($classId);
+        $result = [];
+        foreach ($getExams as $exam) {
+
+            $dataExams = [];
+            $dataExams['name'] = $exam->exam_name;
+            $getExamTimetables = ExamSchedule::getExamTimetable($exam->exam_id, $classId);
+            $resultSubjects = [];
+
+            foreach ($getExamTimetables as $examTimetable) {
+                $dataExamTable = [];
+                $dataExamTable['subject_name'] = $examTimetable->subject_name;
+                $dataExamTable['exam_date'] = $examTimetable->exam_date;
+                $dataExamTable['start_time'] = $examTimetable->start_time;
+                $dataExamTable['end_time'] = $examTimetable->end_time;
+                $dataExamTable['room_number'] = $examTimetable->room_number;
+                $dataExamTable['full_marks'] = $examTimetable->full_marks;
+                $dataExamTable['passing_marks'] = $examTimetable->passing_marks;
+
+                $resultSubjects[] = $dataExamTable;
+            }
+            $dataExams['exam'] = $resultSubjects;
+            $result[] = $dataExams;
+        }
+
+        $data['header_title'] = 'Exam Timetable - ';
+        $data['getRecords'] = $result;
+        $data['getStudent'] = $getStudent;
+        return view('parent.my_exam_timetable', $data);
     }
 }

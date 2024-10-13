@@ -81,8 +81,11 @@
                                             <td>{{$record->blood_group}}</td>
                                             <td>{{$record->height}}</td>
                                             <td>{{$record->weight}}</td>
-                                            <td>{{date('d-m-Y H:i', strtotime($record->created_at))}}</td>
-                                            <td><a class="btn btn-primary btn-sm" href="{{ url('parent/my_student/subject/' . $record->id) }}">Subject</a></td>
+                                            <td>{{date('d-m-Y', strtotime($record->created_at))}}</td>
+                                            <td style="width: 300px;">
+                                                <a class="btn btn-success btn-sm" href="{{ url('parent/my_student/subject/' . $record->id) }}">Subject</a>
+                                                <a class="btn btn-primary btn-sm" href="{{ url('parent/my_student/exam_timetable/' . $record->id) }}">Exam Timetable</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
