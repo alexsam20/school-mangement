@@ -25,8 +25,9 @@ class ClassTimetableController extends Controller
             $dataWeek = [];
             $dataWeek['week_id'] = $day->id;
             $dataWeek['week_name'] = $day->name;
+
             if (!empty($request->class_id) && !empty($request->subject_id)) {
-                $dataWeek[] = $this->timesAndRoomFields($request->class_id, $request->subject_id, $day->id);
+                $dataWeek[] = self::timesAndRoomFields($request->class_id, $request->subject_id, $day->id);
             } else {
                 $dataWeek[] = $this->emptyTimesAndRoomFields();
             }
@@ -85,7 +86,7 @@ class ClassTimetableController extends Controller
             foreach ($getWeek as $day) {
                 $dataWeek = [];
                 $dataWeek['week_name'] = $day->name;
-                $dataWeek[] = $this->timesAndRoomFields($value->class_id, $value->subject_id, $day->id);
+                $dataWeek[] = self::timesAndRoomFields($value->class_id, $value->subject_id, $day->id);
                 $week[] = $dataWeek;
             }
             $dataS['week'] = $week;
@@ -107,7 +108,7 @@ class ClassTimetableController extends Controller
         foreach ($getWeek as $day) {
             $dataWeek = [];
             $dataWeek['week_name'] = $day->name;
-            $timeAndRoom = $this->timesAndRoomFields($class_id, $subject_id, $day->id);
+            $timeAndRoom = self::timesAndRoomFields($class_id, $subject_id, $day->id);
             $result[] = array_merge($dataWeek, $timeAndRoom);
         }
         $data['getRecords'] = $result;
@@ -116,7 +117,7 @@ class ClassTimetableController extends Controller
         return view('teacher.my_timetable', $data);
     }
 
-    private function timesAndRoomFields($class, $subject, $weekDay): array
+    public static function timesAndRoomFields($class, $subject, $weekDay): array
     {
         $classSubject = ClassSubjectTimetable::getRecordClassSubject($class, $subject, $weekDay);
         $dataWeek = [];
@@ -154,7 +155,7 @@ class ClassTimetableController extends Controller
         foreach ($getWeek as $day) {
             $dataWeek = [];
             $dataWeek['week_name'] = $day->name;
-            $timeAndRoom = $this->timesAndRoomFields($class_id, $subject_id, $day->id);
+            $timeAndRoom = self::timesAndRoomFields($class_id, $subject_id, $day->id);
             $result[] = array_merge($dataWeek, $timeAndRoom);
         }
         $data['getRecords'] = $result;

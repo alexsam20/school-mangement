@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AssignClassTeacherController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ClassSubjectController;
 use App\Http\Controllers\ClassTimetableController;
@@ -134,8 +135,10 @@ Route::group(['middleware' => 'student'], function () {
     Route::post('student/account', [UserController::class, 'updateMyAccountStudent']);
     Route::get('student/my_subject', [SubjectController::class, 'mySubject']);
     Route::get('student/my_timetable', [ClassTimetableController::class, 'myTimetable']);
+    Route::get('student/my_exam_timetable', [ExamController::class, 'myExamTimetable']);
     Route::get('student/change_password', [UserController::class, 'change_password']);
     Route::post('student/change_password', [UserController::class, 'update_change_password']);
+    Route::get('student/my_calendar', [CalendarController::class, 'myCalendar']);
 });
 
 // Parent position middleware
