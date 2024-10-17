@@ -45,27 +45,24 @@
     <script src="{{ url('dist/fullcalendar/index.global.js') }}"></script>
     <script type="text/javascript">
         const events = [];
-
         @foreach($getClassTimetable as $record)
                 events.push({
-                    title: '{{ $record['class_name'] }} - {{ $record['subject_name'] }}',
-                    daysOfWeek: [{{ $record['fullcalendar_day'] }}],
-                    startTime: '{{ $record['start_time'] }}',
-                    endTime: '{{ $record['end_time'] }}',
+                    title: 'Class : {{ $record->class_name }} - {{ $record->subject_name }}',
+                    daysOfWeek: [{{ $record->fullcalendar_day }}],
+                    startTime: '{{ $record->start_time }}',
+                    endTime: '{{ $record->end_time }}',
                 });
         @endforeach
 
-{{--        @foreach($getRecordsExamTimeTbl as $record)--}}
-{{--            @foreach($record['exam'] as $exam)--}}
-{{--                events.push({--}}
-{{--                    title: '{{ $record['name'] }} - {{ $exam['subject_name'] }} - ({{ date('h:i A', strtotime($exam['start_time'])) }} to {{ date('h:i A', strtotime($exam['end_time'])) }})',--}}
-{{--                    start: '{{ $exam['exam_date'] }}',--}}
-{{--                    end: '{{ $exam['exam_date'] }}',--}}
-{{--                    color: '#8B2252',--}}
-{{--                    url: '{{ url('student/my_exam_timetable') }}',--}}
-{{--                });--}}
-{{--            @endforeach--}}
-{{--        @endforeach--}}
+        @foreach($getExamTimetable as $record)
+                events.push({
+                    title: 'Exam : {{ $record->class_name }} - {{ $record->subject_name }} - ({{ date('h:i A', strtotime($record->start_time)) }} to {{ date('h:i A', strtotime($record->end_time)) }})',
+                    start: '{{ $record->exam_date }}',
+                    end: '{{ $record->exam_date }}',
+                    color: 'rgb(248,62,62)',
+                    url: '{{ url('teacher/my_exam_timetable') }}',
+                });
+        @endforeach
 
         const calendarEl = document.getElementById('calendar');
         const calendar = new FullCalendar.Calendar(calendarEl, {
