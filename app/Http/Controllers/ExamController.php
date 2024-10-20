@@ -7,6 +7,7 @@ use App\Models\ClassModel;
 use App\Models\ClassSubject;
 use App\Models\Exam;
 use App\Models\ExamSchedule;
+use App\Models\MarkRegister;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -255,5 +256,81 @@ class ExamController extends Controller
         $data['getRecords'] = $result;
         $data['getStudent'] = $getStudent;
         return view('parent.my_exam_timetable', $data);
+    }
+
+    public function marksRegister(Request $request)
+    {
+        $data['getClass'] = ClassModel::getClass();
+        $data['getExam'] = Exam::getExam();
+        if (!empty($request->get('exam_id')) && !empty($request->get('class_id'))) {
+            $data['getSubjects'] = ExamSchedule::getSubject($request->get('exam_id'), $request->get('class_id'));
+            $data['getStudents'] = User::getStudentClass($request->get('class_id'));
+        }
+        $data['header_title'] = 'Marks Register - ';
+        return view('admin.examinations.marks_register', $data);
+    }
+
+    public function submitMarksRegister(Request $request)
+    {
+        $marks = $request->marks;
+        if (!empty($marks)) {
+            foreach ($marks as $mark) {
+//                $class_work = !empty($mark['class_work']) ? $mark['class_work'] : null;
+//                $home_work = !empty($mark['home_work']) ? $mark['home_work'] : null;
+//                $test_work = !empty($mark['test_work']) ? $mark['test_work'] : null;
+//                $exam_work = !empty($mark['exam_work']) ? $mark['exam_work'] : null;
+                $getMarks = MarkRegister::CheckAlreadyMark($request->student_id, $request->exam_id, $request->class_id, $mark['subject_id']);
+                if (!empty($getMarks)) {
+                    $markRegister = $getMarks;
+                } else {
+                    $markRegister = new MarkRegister();
+                    $markRegister->created_by = Auth::user()->id;
+                }
+                $markRegister->student_id = $request->student_id;
+                $markRegister->exam_id = $request->exam_id;
+                $markRegister->class_id = $request->class_id;
+                $markRegister->subject_id = $mark['subject_id'];
+//                $markRegister->class_work = $mark['class_work'] ?: null;
+                $markRegister->class_work = !empty($mark['class_work']) ? $mark['class_work'] : null;
+                $markRegister->home_work = !empty($mark['home_work']) ? $mark['home_work'] : null;
+                $markRegister->test_work = !empty($mark['test_work']) ? $mark['test_work'] : null;
+                $markRegister->exam_work = !empty($mark['exam_work']) ? $mark['exam_work'] : null;
+                $markRegister->save();
+            }
+        }
+        $json['message'] = 'Mark Register successfully saved';
+        echo json_encode($json);
+    }
+
+    public function singleMarksRegister(Request $request)
+    {
+//        $class_work = $request->class_work ?: null;
+//        $home_work = $request->home_work ?: null;
+//        $test_work = $request->test_work ?: null;
+//        $exam_work = $request->exam_work ?: null;
+
+        $getMarks = MarkRegister::CheckAlreadyMark($request->student_id, $request->exam_id, $request->class_id,  $request->subject_id);
+        if (!empty($getMarks)) {
+            $markRegister = $getMarks;
+        } else {
+            $markRegister = new MarkRegister();
+            $markRegister->created_by = Auth::user()->id;
+        }
+        $markRegister->student_id = $request->student_id;
+        $markRegister->exam_id = $request->exam_id;
+        $markRegister->class_id = $request->class_id;
+        $markRegister->subject_id = $request->subject_id;
+        $markRegister->class_work = $request->class_work ?: null;
+        $markRegister->home_work = $request->home_work ?: null;
+        $markRegister->test_work = $request->test_work ?: null;
+        $markRegister->exam_work = $request->exam_work ?: null;
+//        $markRegister->class_work = !empty($mark['class_work']) ? $mark['class_work'] : null;
+//        $markRegister->home_work = !empty($mark['home_work']) ? $mark['home_work'] : null;
+//        $markRegister->test_work = !empty($mark['test_work']) ? $mark['test_work'] : null;
+//        $markRegister->exam_work = !empty($mark['exam_work']) ? $mark['exam_work'] : null;
+        $markRegister->save();
+
+        $json['message'] = 'Mark Register successfully saved';
+        echo json_encode($json);
     }
 }

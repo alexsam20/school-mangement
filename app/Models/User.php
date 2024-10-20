@@ -125,45 +125,6 @@ class User extends Authenticatable
             ->get();
     }
 
-    public static function getParent()
-    {
-        $query = self::select('users.*')
-            ->where('user_type', 4)
-            ->where('is_delete', 0);
-        if (!empty(Request::get('name'))) {
-            $query = $query->where('users.name', 'like', '%' . Request::get('name') . '%');
-        }
-        if (!empty(Request::get('last_name'))) {
-            $query = $query->where('users.last_name', 'like', '%' . Request::get('last_name') . '%');
-        }
-        if (!empty(Request::get('email'))) {
-            $query = $query->where('users.email', 'like', '%' . Request::get('email') . '%');
-        }
-        if (!empty(Request::get('gender'))) {
-            $query = $query->where('users.gender', Request::get('gender'));
-        }
-        if (!empty(Request::get('occupation'))) {
-            $query = $query->where('users.occupation', 'like', '%' . Request::get('occupation') . '%');
-        }
-        if (!empty(Request::get('address'))) {
-            $query = $query->where('users.address', 'like', '%' . Request::get('address') . '%');
-        }
-        if (!empty(Request::get('mobile_number'))) {
-            $query = $query->where('users.mobile_number', 'like', '%' . Request::get('mobile_number') . '%');
-        }
-        if (!empty(Request::get('created_at'))) {
-            $query = $query->whereDate('users.created_at', Request::get('created_at'));
-        }
-        if (!empty(Request::get('status'))) {
-            $status = (Request::get('status') == 100) ? 0 : 1;
-            $query = $query->where('users.status', $status);
-        }
-        $query = $query->orderBy('id', 'desc')
-            ->paginate(20);
-
-        return $query;
-    }
-
     public static function getStudent()
     {
         $query = self::select('users.*', 'class.name as class_name', 'parent.name as parent_name', 'parent.last_name as parent_last_name')
@@ -218,6 +179,55 @@ class User extends Authenticatable
             ->paginate(20);
 
         return $query;
+    }
+
+    public static function getParent()
+    {
+        $query = self::select('users.*')
+            ->where('user_type', 4)
+            ->where('is_delete', 0);
+        if (!empty(Request::get('name'))) {
+            $query = $query->where('users.name', 'like', '%' . Request::get('name') . '%');
+        }
+        if (!empty(Request::get('last_name'))) {
+            $query = $query->where('users.last_name', 'like', '%' . Request::get('last_name') . '%');
+        }
+        if (!empty(Request::get('email'))) {
+            $query = $query->where('users.email', 'like', '%' . Request::get('email') . '%');
+        }
+        if (!empty(Request::get('gender'))) {
+            $query = $query->where('users.gender', Request::get('gender'));
+        }
+        if (!empty(Request::get('occupation'))) {
+            $query = $query->where('users.occupation', 'like', '%' . Request::get('occupation') . '%');
+        }
+        if (!empty(Request::get('address'))) {
+            $query = $query->where('users.address', 'like', '%' . Request::get('address') . '%');
+        }
+        if (!empty(Request::get('mobile_number'))) {
+            $query = $query->where('users.mobile_number', 'like', '%' . Request::get('mobile_number') . '%');
+        }
+        if (!empty(Request::get('created_at'))) {
+            $query = $query->whereDate('users.created_at', Request::get('created_at'));
+        }
+        if (!empty(Request::get('status'))) {
+            $status = (Request::get('status') == 100) ? 0 : 1;
+            $query = $query->where('users.status', $status);
+        }
+        $query = $query->orderBy('id', 'desc')
+            ->paginate(20);
+
+        return $query;
+    }
+
+    public static function getStudentClass($class_id)
+    {
+        return self::select('users.id', 'users.name', 'users.last_name')
+            ->where('users.user_type', 3)
+            ->where('users.is_delete', 0)
+            ->where('users.class_id', $class_id)
+            ->orderBy('users.id', 'desc')
+            ->get();
     }
 
     public static function getSearchStudent()

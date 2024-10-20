@@ -46,6 +46,16 @@ class ExamSchedule extends Model
             ->get();
     }
 
+    public static function getSubject($examId, $classId)
+    {
+        return self::select('exam_schedules.*', 'subjects.name as subject_name', 'subjects.type as subject_type')
+            ->join('subjects', 'subjects.id', 'exam_schedules.subject_id')
+            ->where('exam_schedules.exam_id', $examId)
+            ->where('exam_schedules.class_id', $classId)
+            ->oldest()
+            ->get();
+    }
+
     public static function getExamTimetableTeacher($teacher_id)
     {
         return self::select('exam_schedules.*', 'class.name as class_name', 'subjects.name as subject_name', 'exams.name as exam_name')
@@ -55,5 +65,10 @@ class ExamSchedule extends Model
             ->join('exams', 'exams.id', 'exam_schedules.exam_id')
             ->where('assign_class_teacher.teacher_id', $teacher_id)
             ->get();
+    }
+
+    public static function getMark(mixed $student_id, mixed $exam_id, mixed $class_id, mixed $subject_id)
+    {
+        return MarkRegister::CheckAlreadyMark($student_id, $exam_id, $class_id, $subject_id);
     }
 }
