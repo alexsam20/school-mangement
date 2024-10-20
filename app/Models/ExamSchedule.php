@@ -11,6 +11,11 @@ class ExamSchedule extends Model
 
     protected $table = 'exam_schedules';
 
+    public static function getSingle($id)
+    {
+        return self::find($id);
+    }
+
     public static function getRecordSingle($exam, $class, $subject)
     {
         return self::where('exam_id', $exam)
