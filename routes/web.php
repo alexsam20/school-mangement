@@ -129,6 +129,10 @@ Route::group(['middleware' => 'teacher'], function () {
     Route::get('teacher/my_class_subject/class_timetable/{class_id}/{subject_id}', [ClassTimetableController::class, 'myTimetableTeacher']);
     Route::get('teacher/my_exam_timetable', [ExamController::class, 'myExamTimetableTeacher']);
     Route::get('teacher/my_calendar', [CalendarController::class, 'myCalendarTeacher']);
+
+    Route::get('teacher/marks_register', [ExamController::class, 'marksRegisterTeacher']);
+    Route::post('teacher/submit_marks_register', [ExamController::class, 'submitMarksRegister']);
+    Route::post('teacher/single_submit_marks_register', [ExamController::class, 'singleMarksRegister']);
 });
 
 // Student position middleware

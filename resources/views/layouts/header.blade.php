@@ -1,4 +1,4 @@
-<!-- Navbar -->
+ <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
@@ -293,6 +293,14 @@
                             <i class="nav-icon far fa-user"></i>
                             <p>
                                 My Calendar
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('teacher/marks_register') }}" class="nav-link @if(Request::segment(2) == 'marks_register') active @endif">
+                            <i class="nav-icon far fa-user"></i>
+                            <p>
+                                Marks Register
                             </p>
                         </a>
                     </li>
