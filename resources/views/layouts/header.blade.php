@@ -362,6 +362,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ url('student/my_exam_result') }}" class="nav-link @if(Request::segment(2) == 'my_exam_result') active @endif">
+                            <i class="nav-icon far fa-user"></i>
+                            <p>
+                                My Exam Result
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ url('student/account') }}" class="nav-link @if(Request::segment(2) == 'account') active @endif">
                             <i class="nav-icon far fa-user"></i>
                             <p>

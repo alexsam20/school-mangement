@@ -109,6 +109,10 @@
                                                             <td>
                                                                 <div style="margin-bottom: 10px;">
                                                                     Class Work
+                                                                    <input type="hidden" name="marks[{{$i}}][full_marks]"
+                                                                           value="{{ $subject->full_marks }}"/>
+                                                                    <input type="hidden" name="marks[{{$i}}][passing_marks]"
+                                                                           value="{{ $subject->passing_marks }}"/>
                                                                     <input type="hidden" name="marks[{{$i}}][id]"
                                                                            value="{{ $subject->id }}"/>
                                                                     <input type="hidden"

@@ -88,10 +88,8 @@
                                                 <form method="post" name="post" class="marks">
                                                     {{ csrf_field() }}
                                                     <input type="hidden" name="student_id" value="{{ $student->id }}">
-                                                    <input type="hidden" name="exam_id"
-                                                           value="{{ request('exam_id') }}">
-                                                    <input type="hidden" name="class_id"
-                                                           value="{{ request('class_id') }}">
+                                                    <input type="hidden" name="exam_id" value="{{ request('exam_id') }}">
+                                                    <input type="hidden" name="class_id" value="{{ request('class_id') }}">
                                                     <tr>
                                                         <td>{{ $student->name }} {{ $student->last_name }}</td>
                                                         @php $i = 1; $totalStudentsMarks = $totalFullMarks = $totalPassingMarks = $passFailValid = 0; @endphp
@@ -109,10 +107,10 @@
                                                             <td>
                                                                 <div style="margin-bottom: 10px;">
                                                                     Class Work
-                                                                    <input type="hidden" name="marks[{{$i}}][id]"
-                                                                           value="{{ $subject->id }}"/>
-                                                                    <input type="hidden"
-                                                                           name="marks[{{$i}}][subject_id]"
+                                                                    <input type="hidden" name="marks[{{$i}}][full_marks]" value="{{ $subject->full_marks }}"/>
+                                                                    <input type="hidden" name="marks[{{$i}}][passing_marks]" value="{{ $subject->passing_marks }}"/>
+                                                                    <input type="hidden" name="marks[{{$i}}][id]" value="{{ $subject->id }}"/>
+                                                                    <input type="hidden" name="marks[{{$i}}][subject_id]"
                                                                            value="{{ $subject->subject_id }}"/>
                                                                     <input type="text" name="marks[{{$i}}][class_work]"
                                                                            id="class_work_{{ $student->id }}{{ $subject->subject_id }}"
@@ -170,7 +168,7 @@
                                                                             id="{{ $student->id }}"
                                                                             data-subject="{{ $subject->subject_id }}"
                                                                             data-exam="{{ request('exam_id') }}"
-                                                                            data-schedule="{{ $subject->id }}"
+                                                                            data-schedule ="{{ $subject->id }}"
                                                                             data-class="{{ request('class_id') }}">Save
                                                                     </button>
                                                                 </div>
