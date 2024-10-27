@@ -34,7 +34,8 @@
                                             <select class="form-control" name="exam_id" required>
                                                 <option value="">Select Exam</option>
                                                 @foreach($getExam as $exam)
-                                                    <option {{(request('exam_id') == $exam->id) ? 'selected' : ''}} value="{{ $exam->id }}">{{ $exam->name }}</option>
+                                                    <option
+                                                        {{(request('exam_id') == $exam->id) ? 'selected' : ''}} value="{{ $exam->id }}">{{ $exam->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -43,7 +44,8 @@
                                             <select class="form-control" name="class_id" required>
                                                 <option value="">Select Class</option>
                                                 @foreach($getClass as $class)
-                                                    <option {{(request('class_id') == $class->id) ? 'selected' : ''}} value="{{ $class->id }}">{{ $class->name }}</option>
+                                                    <option
+                                                        {{(request('class_id') == $class->id) ? 'selected' : ''}} value="{{ $class->id }}">{{ $class->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -88,29 +90,37 @@
                                                 <form method="post" name="post" class="marks">
                                                     {{ csrf_field() }}
                                                     <input type="hidden" name="student_id" value="{{ $student->id }}">
-                                                    <input type="hidden" name="exam_id" value="{{ request('exam_id') }}">
-                                                    <input type="hidden" name="class_id" value="{{ request('class_id') }}">
+                                                    <input type="hidden" name="exam_id"
+                                                           value="{{ request('exam_id') }}">
+                                                    <input type="hidden" name="class_id"
+                                                           value="{{ request('class_id') }}">
                                                     <tr>
                                                         <td>{{ $student->name }} {{ $student->last_name }}</td>
                                                         @php $i = 1; $totalStudentsMarks = $totalFullMarks = $totalPassingMarks = $passFailValid = 0; @endphp
                                                         @foreach($getSubjects as $subject)
                                                             @php
                                                                 $totalMark = 0;
-                                                                $totalFullMarks = $totalFullMarks + $subject->full_marks;
-                                                                $totalPassingMarks = $totalPassingMarks + $subject->passing_marks;
+                                                                $totalFullMarks += $subject->full_marks;
+                                                                $totalPassingMarks += $subject->passing_marks;
                                                                 $getMark = $subject->getMark($student->id, request('exam_id'), request('class_id'), $subject->subject_id);
                                                                 if (!empty($getMark)) {
                                                                     $totalMark = $getMark->class_work + $getMark->home_work + $getMark->test_work + $getMark->exam_work;
                                                                 }
-                                                                $totalStudentsMarks = $totalStudentsMarks + $totalMark;
+                                                                $totalStudentsMarks += $totalMark;
                                                             @endphp
                                                             <td>
                                                                 <div style="margin-bottom: 10px;">
                                                                     Class Work
-                                                                    <input type="hidden" name="marks[{{$i}}][full_marks]" value="{{ $subject->full_marks }}"/>
-                                                                    <input type="hidden" name="marks[{{$i}}][passing_marks]" value="{{ $subject->passing_marks }}"/>
-                                                                    <input type="hidden" name="marks[{{$i}}][id]" value="{{ $subject->id }}"/>
-                                                                    <input type="hidden" name="marks[{{$i}}][subject_id]"
+                                                                    <input type="hidden"
+                                                                           name="marks[{{$i}}][full_marks]"
+                                                                           value="{{ $subject->full_marks }}"/>
+                                                                    <input type="hidden"
+                                                                           name="marks[{{$i}}][passing_marks]"
+                                                                           value="{{ $subject->passing_marks }}"/>
+                                                                    <input type="hidden" name="marks[{{$i}}][id]"
+                                                                           value="{{ $subject->id }}"/>
+                                                                    <input type="hidden"
+                                                                           name="marks[{{$i}}][subject_id]"
                                                                            value="{{ $subject->subject_id }}"/>
                                                                     <input type="text" name="marks[{{$i}}][class_work]"
                                                                            id="class_work_{{ $student->id }}{{ $subject->subject_id }}"
@@ -149,15 +159,17 @@
                                                                 @if(!empty($getMark))
                                                                     <div style="margin-bottom: 10px;">
                                                                         <strong>Total Mark :</strong> <span
-                                                                                class="badge bg-warning">{{ $totalMark }}</span>
+                                                                            class="badge bg-warning">{{ $totalMark }}</span>
                                                                         <br/>
                                                                         <strong>Passing Mark :</strong> <span
-                                                                                class="badge bg-success">{{ $subject->passing_marks }}</span>
+                                                                            class="badge bg-success">{{ $subject->passing_marks }}</span>
                                                                         <br/>
                                                                         @if($subject->passing_marks <= $totalMark)
-                                                                            <span class="badge bg-blue">Result</span> <span class="badge bg-success">Pass</span>
+                                                                            <span class="badge bg-blue">Result</span>
+                                                                            <span class="badge bg-success">Pass</span>
                                                                         @else
-                                                                            <span class="badge bg-blue">Result</span> <span class="badge bg-danger">Fail</span>
+                                                                            <span class="badge bg-blue">Result</span>
+                                                                            <span class="badge bg-danger">Fail</span>
                                                                             @php $passFailValid = 1; @endphp
                                                                         @endif
                                                                     </div>
@@ -168,7 +180,7 @@
                                                                             id="{{ $student->id }}"
                                                                             data-subject="{{ $subject->subject_id }}"
                                                                             data-exam="{{ request('exam_id') }}"
-                                                                            data-schedule ="{{ $subject->id }}"
+                                                                            data-schedule="{{ $subject->id }}"
                                                                             data-class="{{ request('class_id') }}">Save
                                                                     </button>
                                                                 </div>
@@ -183,24 +195,30 @@
                                                                 <br/>
                                                                 <span style="margin-bottom: 5px;"
                                                                       class="badge bg-yellow">Total Subject Mark</span>
-                                                                <span class="badge bg-purple">{{ $totalFullMarks }}</span>
+                                                                <span
+                                                                    class="badge bg-purple">{{ $totalFullMarks }}</span>
                                                                 <br/>
                                                                 <span style="margin-bottom: 5px;"
                                                                       class="badge bg-yellow">Total Passing Mark</span>
-                                                                <span class="badge bg-purple">{{ $totalPassingMarks }}</span>
+                                                                <span
+                                                                    class="badge bg-purple">{{ $totalPassingMarks }}</span>
                                                                 <br/>
                                                                 <span style="margin-bottom: 5px;"
                                                                       class="badge bg-yellow">Total Student Mark</span>
-                                                                <span class="badge bg-purple">{{ $totalStudentsMarks }}</span>
-                                                                <br />
-                                                                <br />
+                                                                <span
+                                                                    class="badge bg-purple">{{ $totalStudentsMarks }}</span>
+                                                                <br/>
+                                                                <br/>
                                                                 @php $percentage = ($totalStudentsMarks * 100) / $totalFullMarks; @endphp
                                                                 <span style="margin-bottom: 5px;"
-                                                                      class="badge bg-yellow">Percentage</span> <span class="badge bg-lime">{{ round($percentage, 2) }}%</span>
+                                                                      class="badge bg-yellow">Percentage</span> <span
+                                                                    class="badge bg-lime">{{ round($percentage, 2) }}%</span>
                                                                 @if($passFailValid == 0)
-                                                                    <br/><span class="badge bg-blue">Result</span> <span class="badge bg-success">Pass</span>
+                                                                    <br/><span class="badge bg-blue">Result</span> <span
+                                                                        class="badge bg-success">Pass</span>
                                                                 @else
-                                                                    <br/><span class="badge bg-blue">Result</span> <span class="badge bg-danger">Fail</span>
+                                                                    <br/><span class="badge bg-blue">Result</span> <span
+                                                                        class="badge bg-danger">Fail</span>
                                                                 @endif
                                                             @endif
                                                         </td>
