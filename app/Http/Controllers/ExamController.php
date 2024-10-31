@@ -404,4 +404,36 @@ class ExamController extends Controller
         $data['header_title'] = 'My Exam Result - ';
         return view('student.my_exam_result', $data);
     }
+
+    public function parentMyExamResult($student_id)
+    {
+        $data['getStudent'] = User::getSingle($student_id);
+        $getExams = MarkRegister::getExam($student_id);
+        $result = [];
+        foreach ($getExams as $exam) {
+            $dataExam = [];
+            $dataExam['exam_name'] = $exam->exam_name;
+            $getExamSubjects = MarkRegister::getExamSubject($exam->exam_id, $student_id);
+            $dataExamSubjects = [];
+            foreach ($getExamSubjects as $examSubject) {
+                $total_score = $examSubject['class_work'] + $examSubject['test_work'] + $examSubject['home_work'] + $examSubject['exam_work'];
+                $dataSubjects = [];
+                $dataSubjects['subject_name'] = $examSubject['subject_name'];
+                $dataSubjects['class_work'] = $examSubject['class_work'];
+                $dataSubjects['test_work'] = $examSubject['test_work'];
+                $dataSubjects['home_work'] = $examSubject['home_work'];
+                $dataSubjects['exam_work'] = $examSubject['exam_work'];
+                $dataSubjects['total_score'] = $total_score;
+                $dataSubjects['full_marks'] = $examSubject['full_marks'];
+                $dataSubjects['passing_marks'] = $examSubject['passing_marks'];
+                $dataExamSubjects[] = $dataSubjects;
+            }
+            $dataExam['subject'] = $dataExamSubjects;
+            $result[] = $dataExam;
+        }
+
+        $data['getRecords'] = $result;
+        $data['header_title'] = 'My Exam Result - ';
+        return view('parent.my_exam_result', $data);
+    }
 }

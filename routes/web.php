@@ -158,6 +158,7 @@ Route::group(['middleware' => 'parent'], function () {
     Route::post('parent/change_password', [UserController::class, 'update_change_password']);
     Route::get('parent/my_student/subject/{student_id}', [SubjectController::class, 'parentStudentSubject']);
     Route::get('parent/my_student/exam_timetable/{student_id}', [ExamController::class, 'parentMyExamTimetable']);
+    Route::get('parent/my_student/exam_result/{student_id}', [ExamController::class, 'parentMyExamResult']);
     Route::get('parent/my_student/class_timetable/{class_id}/{subject_id}/{student_id}', [ClassTimetableController::class, 'myTimetableParent']);
     Route::get('parent/my_student/calendar/{student_id}', [CalendarController::class, 'myCalendarParent']);
     Route::get('parent/my_student', [ParentController::class, 'myStudentParent']);
