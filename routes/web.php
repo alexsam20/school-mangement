@@ -110,9 +110,17 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('admin/examinations/marks_register', [ExamController::class, 'marksRegister']);
     Route::post('admin/examinations/submit_marks_register', [ExamController::class, 'submitMarksRegister']);
     Route::post('admin/examinations/single_submit_marks_register', [ExamController::class, 'singleMarksRegister']);
+
+    Route::get('admin/examinations/marks_grade', [ExamController::class, 'marksGrade']);
+    Route::get('admin/examinations/marks_grade/add', [ExamController::class, 'marksGradeAdd']);
+    Route::post('admin/examinations/marks_grade/add', [ExamController::class, 'marksGradeInsert']);
+    Route::get('admin/examinations/marks_grade/edit/{id}', [ExamController::class, 'marksGradeEdit']);
+    Route::post('admin/examinations/marks_grade/edit/{id}', [ExamController::class, 'marksGradeUpdate']);
+    Route::get('admin/examinations/marks_grade/delete/{id}', [ExamController::class, 'marksGradeDelete']);
+
+
     Route::get('admin/account', [UserController::class, 'myAccount']);
     Route::post('admin/account', [UserController::class, 'updateMyAccountAdmin']);
-
     Route::get('admin/change_password', [UserController::class, 'change_password']);
     Route::post('admin/change_password', [UserController::class, 'update_change_password']);
 });
