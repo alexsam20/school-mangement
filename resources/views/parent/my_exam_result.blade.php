@@ -74,9 +74,16 @@
                                                 <strong>Grand Total:</strong> <span class="badge bg-gray">{{ $total_score }}/{{ $full_marks }}</span>
                                             </td>
                                             <td colspan="2">
-                                                <strong>Percentage:</strong> <span class="badge bg-gray">{{ round(($total_score * 100) / $full_marks, 2) }}%</span>
+                                                @php
+                                                    $percentage = ($total_score * 100) / $full_marks;
+                                                    $getGrade = App\Models\MarksGrade::getGrade($percentage);
+                                                @endphp
+                                                <strong>Percentage:</strong> <span class="badge bg-gray">{{ round($percentage, 2) }}%</span>
                                             </td>
-                                            <td colspan="5">
+                                            <td colspan="2">
+                                                <strong>Grade:</strong> <span class="badge bg-purple">{{ $getGrade }}</span>
+                                            </td>
+                                            <td colspan="3">
                                                 <strong>Result:</strong>
                                                 @if($result_validation == 0)
                                                     <span class="badge bg-green">Pass</span>

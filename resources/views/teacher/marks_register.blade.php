@@ -154,12 +154,18 @@
                                                                 </div>
                                                                 @if(!empty($getMark))
                                                                     <div style="margin-bottom: 10px;">
+                                                                        @php $getLoopGrade = App\Models\MarksGrade::getGrade($totalMark); @endphp
                                                                         <strong>Total Mark :</strong> <span
                                                                             class="badge bg-warning">{{ $totalMark }}</span>
                                                                         <br/>
                                                                         <strong>Passing Mark :</strong> <span
                                                                             class="badge bg-success">{{ $subject->passing_marks }}</span>
                                                                         <br/>
+                                                                        @if(!empty($getLoopGrade))
+                                                                            <strong>Grade :</strong> <span
+                                                                                class="badge bg-orange">{{ $getLoopGrade }}</span>
+                                                                            <br/>
+                                                                        @endif
                                                                         @if($subject->passing_marks <= $totalMark)
                                                                             <span class="badge bg-blue">Result</span> <span class="badge bg-success">Pass</span>
                                                                         @else
@@ -200,9 +206,18 @@
                                                                 <span class="badge bg-purple">{{ $totalStudentsMarks }}</span>
                                                                 <br />
                                                                 <br />
-                                                                @php $percentage = ($totalStudentsMarks * 100) / $totalFullMarks; @endphp
+                                                                @php
+                                                                    $percentage = ($totalStudentsMarks * 100) / $totalFullMarks;
+                                                                    $getGrade = App\Models\MarksGrade::getGrade($percentage);
+                                                                @endphp
                                                                 <span style="margin-bottom: 5px;"
-                                                                      class="badge bg-yellow">Percentage</span> <span class="badge bg-lime">{{ round($percentage, 2) }}%</span>
+                                                                      class="badge bg-yellow">Percentage</span> <span class="badge bg-lime">{{ round($percentage, 2) }}%</span><br />
+                                                                @if(!empty($getGrade))
+                                                                    <span style="margin-bottom: 5px;"
+                                                                          class="badge bg-yellow">Grade</span> <span
+                                                                        class="badge bg-fuchsia">{{ $getGrade }}</span>
+                                                                    <br />
+                                                                @endif
                                                                 @if($passFailValid == 0)
                                                                     <br/><span class="badge bg-blue">Result</span> <span class="badge bg-success">Pass</span>
                                                                 @else
