@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AssignClassTeacherController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ClassController;
@@ -23,10 +24,6 @@ Route::get('forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('forgot-password', [AuthController::class, 'PostForgotPassword']);
 Route::get('reset/{token}', [AuthController::class, 'reset']);
 Route::post('reset/{token}', [AuthController::class, 'passwordReset']);
-
-//Route::get('admin/admin/list', function () {
-//    return view('admin.admin.list');
-//});
 
 // Admin position middleware
 Route::group(['middleware' => 'admin'], function () {
@@ -117,6 +114,9 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('admin/examinations/marks_grade/edit/{id}', [ExamController::class, 'marksGradeEdit']);
     Route::post('admin/examinations/marks_grade/edit/{id}', [ExamController::class, 'marksGradeUpdate']);
     Route::get('admin/examinations/marks_grade/delete/{id}', [ExamController::class, 'marksGradeDelete']);
+
+    Route::get('admin/attendance/student', [AttendanceController::class, 'attendanceStudent']);
+    Route::post('admin/attendance/student/save', [AttendanceController::class, 'attendanceStudentSubmit']);
 
 
     Route::get('admin/account', [UserController::class, 'myAccount']);

@@ -305,4 +305,9 @@ class User extends Authenticatable
             ->groupBy('users.id')
             ->paginate(20);
     }
+
+    public static function getAttendance($student_id, $class_id, $attendance_date)
+    {
+        return StudentAttendance::CheckAttendance($student_id, $class_id, $attendance_date);
+    }
 }

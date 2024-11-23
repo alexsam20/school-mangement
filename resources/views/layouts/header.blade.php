@@ -235,7 +235,7 @@
                                 <a href="{{ url('admin/examinations/exam/list') }}"
                                    class="nav-link @if(Request::segment(3) == 'exam') active @endif">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Exam List</p>
+                                    <p>Exam</p>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -261,6 +261,26 @@
                             </li>
                         </ul>
                     </li>
+
+                    <li class="nav-item @if(Request::segment(2) == 'attendance')  menu-is-opening menu-open @endif">
+                        <a href="#" class="nav-link @if(Request::segment(2) == 'attendance') active @endif">
+                            <i class="nav-icon fas fa-table"></i>
+                            <p>
+                                Attendance
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ url('admin/attendance/student') }}"
+                                   class="nav-link @if(Request::segment(3) == 'student') active @endif">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Student Attendance</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
                     <li class="nav-item">
                         <a href="{{ url('admin/account') }}"
                            class="nav-link @if(Request::segment(2) == 'account') active @endif">
@@ -270,6 +290,7 @@
                             </p>
                         </a>
                     </li>
+
                     <li class="nav-item">
                         <a href="{{ url('admin/change_password') }}"
                            class="nav-link @if(Request::segment(2) == 'change_password') active @endif">
