@@ -117,6 +117,7 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::get('admin/attendance/student', [AttendanceController::class, 'attendanceStudent']);
     Route::post('admin/attendance/student/save', [AttendanceController::class, 'attendanceStudentSubmit']);
+    Route::get('admin/attendance/report', [AttendanceController::class, 'attendanceReport']);
 
 
     Route::get('admin/account', [UserController::class, 'myAccount']);

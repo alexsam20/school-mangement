@@ -40,4 +40,13 @@ class AttendanceController extends Controller
         $json['message'] = 'Attendance Successfully Saved';
         echo json_encode($json);
     }
+
+    public function attendanceReport(Request $request)
+    {
+        $data['getClass'] = ClassModel::getClass();
+        $data['getRecords'] = StudentAttendance::getRecords();
+        $data['header_title'] = 'Attendance Report - ';
+
+        return view('admin.attendance.report', $data);
+    }
 }
