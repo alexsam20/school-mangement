@@ -142,6 +142,9 @@ Route::group(['middleware' => 'teacher'], function () {
     Route::get('teacher/marks_register', [ExamController::class, 'marksRegisterTeacher']);
     Route::post('teacher/submit_marks_register', [ExamController::class, 'submitMarksRegister']);
     Route::post('teacher/single_submit_marks_register', [ExamController::class, 'singleMarksRegister']);
+
+    Route::get('teacher/attendance/student', [AttendanceController::class, 'attendanceStudentTeacher']);
+    Route::post('teacher/attendance/student/save', [AttendanceController::class, 'attendanceStudentSubmit']);
 });
 
 // Student position middleware

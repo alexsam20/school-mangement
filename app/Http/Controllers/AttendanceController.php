@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AssignClassTeacher;
 use App\Models\ClassModel;
 use App\Models\StudentAttendance;
 use App\Models\User;
@@ -25,7 +26,7 @@ class AttendanceController extends Controller
     public function attendanceStudentSubmit(Request $request)
     {
         $check_attendance = StudentAttendance::CheckAttendance($request->student_id, $request->class_id, $request->attendance_date);
-        if (!empty($check_attendance)){
+        if (!empty($check_attendance)) {
             $attendance = $check_attendance;
         } else {
             $attendance = new StudentAttendance();
@@ -48,5 +49,17 @@ class AttendanceController extends Controller
         $data['header_title'] = 'Attendance Report - ';
 
         return view('admin.attendance.report', $data);
+    }
+
+    public function attendanceStudentTeacher(Request $request)
+    {
+        $data['getClass'] = AssignClassTeacher::getMyClassSubjectGroup(Auth::user()->id);
+        if (!empty($request->get('class_id')) && !empty($request->get('attendance_date'))) {
+            $data['getStudent'] = $data['getStudents'] = User::getStudentClass($request->get('class_id'));
+        }
+
+        $data['header_title'] = 'Attendance Student - ';
+
+        return view('teacher.attendance.student', $data);
     }
 }
