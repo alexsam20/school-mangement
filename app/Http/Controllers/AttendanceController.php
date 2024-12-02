@@ -70,11 +70,19 @@ class AttendanceController extends Controller
         foreach ($getClass as $class) {
             $classArray[] = $class->class_id;
         }
-//        dd($classArray);
         $data['getClass'] = $getClass;
         $data['getRecords'] = StudentAttendance::getRecordsTeacher($classArray);
         $data['header_title'] = 'Attendance Report - ';
 
         return view('teacher.attendance.report', $data);
+    }
+
+    public function myAttendanceStudent()
+    {
+        $data['getRecords'] = StudentAttendance::getRecordsStudent(Auth::user()->id);
+        $data['getClass'] = StudentAttendance::getClassStudent(Auth::user()->id);
+        $data['header_title'] = 'My Attendance - ';
+
+        return view('student.my_attendance', $data);
     }
 }
