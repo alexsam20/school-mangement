@@ -65,9 +65,15 @@
                                         </div>
 
                                         <div class="form-group col-md-2">
-                                            <label for="name">Attendance Date</label>
-                                            <input type="date" class="form-control" name="attendance_date"
-                                                   value="{{ request('attendance_date') }}">
+                                            <label for="start_attendance_date">Start Attendance Date</label>
+                                            <input type="date" class="form-control" name="start_attendance_date"
+                                                   value="{{ request('start_attendance_date') }}">
+                                        </div>
+
+                                        <div class="form-group col-md-2">
+                                            <label for="end_attendance_date">End Attendance Date</label>
+                                            <input type="date" class="form-control" name="end_attendance_date"
+                                                   value="{{ request('end_attendance_date') }}">
                                         </div>
 
                                         <div class="form-group col-md-2">

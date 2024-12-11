@@ -26,7 +26,7 @@ class StudentAttendance extends Model
             ->join('class', 'class.id', 'student_attendances.class_id')
             ->join('users as student', 'student.id', 'student_attendances.student_id')
             ->join('users as creator', 'creator.id', 'student_attendances.created_by');
-        if (!empty(Request::get('student_id'))) {
+        if (self::isNotEmptyGet('student_id')) {
             $records = $records->where('student_attendances.student_id', Request::get('student_id'));
         }
         $student_name = Request::get('student_name');
@@ -35,16 +35,18 @@ class StudentAttendance extends Model
                 $query->where('student.name', 'like', '%' . $student_name . '%')
                     ->orWhere('student.last_name', 'like', '%' . $student_name . '%');
             });
-//            $records = $records->where('student.name', 'like', '%' . $student_name . '%');
         }
-        if (!empty(Request::get('class_id'))) {
+        if (self::isNotEmptyGet('class_id')) {
             $records = $records->where('student_attendances.class_id', Request::get('class_id'));
         }
-        if (!empty(Request::get('attendance_date'))) {
-            $records = $records->where('student_attendances.attendance_date', Request::get('attendance_date'));
-        }
-        if (!empty(Request::get('attendance_type'))) {
+        if (self::isNotEmptyGet('attendance_type')) {
             $records = $records->where('student_attendances.attendance_type', Request::get('attendance_type'));
+        }
+        if (self::isNotEmptyGet('start_attendance_date')) {
+            $records = $records->where('student_attendances.attendance_date', '>=', Request::get('start_attendance_date'));
+        }
+        if (self::isNotEmptyGet('end_attendance_date')) {
+            $records = $records->where('student_attendances.attendance_date', '<=', Request::get('end_attendance_date'));
         }
         $records = $records->orderBy('student_attendances.id', 'desc')
             ->paginate(50);
@@ -60,7 +62,7 @@ class StudentAttendance extends Model
                 ->join('users as student', 'student.id', 'student_attendances.student_id')
                 ->join('users as creator', 'creator.id', 'student_attendances.created_by')
                 ->whereIn('student_attendances.class_id', $classIds);
-            if (!empty(Request::get('student_id'))) {
+            if (self::isNotEmptyGet('student_id')) {
                 $records = $records->where('student_attendances.student_id', Request::get('student_id'));
             }
             $student_name = Request::get('student_name');
@@ -70,13 +72,16 @@ class StudentAttendance extends Model
                         ->orWhere('student.last_name', 'like', '%' . $student_name . '%');
                 });
             }
-            if (!empty(Request::get('class_id'))) {
+            if (self::isNotEmptyGet('class_id')) {
                 $records = $records->where('student_attendances.class_id', Request::get('class_id'));
             }
-            if (!empty(Request::get('attendance_date'))) {
-                $records = $records->where('student_attendances.attendance_date', Request::get('attendance_date'));
+            if (self::isNotEmptyGet('start_attendance_date')) {
+                $records = $records->where('student_attendances.attendance_date', '>=', Request::get('start_attendance_date'));
             }
-            if (!empty(Request::get('attendance_type'))) {
+            if (self::isNotEmptyGet('end_attendance_date')) {
+                $records = $records->where('student_attendances.attendance_date', '<=', Request::get('end_attendance_date'));
+            }
+            if (self::isNotEmptyGet('attendance_type')) {
                 $records = $records->where('student_attendances.attendance_type', Request::get('attendance_type'));
             }
             $records = $records->orderBy('student_attendances.id', 'desc')
@@ -94,14 +99,17 @@ class StudentAttendance extends Model
         $records = self::select('student_attendances.*', 'class.name as class_name')
             ->join('class', 'class.id', 'student_attendances.class_id')
             ->where('student_attendances.student_id', $id);
-        if (!empty(Request::get('class_id'))) {
+        if (self::isNotEmptyGet('class_id')) {
             $records = $records->where('student_attendances.class_id', Request::get('class_id'));
         }
-        if (!empty(Request::get('attendance_type'))) {
+        if (self::isNotEmptyGet('attendance_type')) {
             $records = $records->where('student_attendances.attendance_type', Request::get('attendance_type'));
         }
-        if (!empty(Request::get('attendance_date'))) {
-            $records = $records->where('student_attendances.attendance_date', Request::get('attendance_date'));
+        if (self::isNotEmptyGet('start_attendance_date')) {
+            $records = $records->where('student_attendances.attendance_date', '>=', Request::get('start_attendance_date'));
+        }
+        if (self::isNotEmptyGet('end_attendance_date')) {
+            $records = $records->where('student_attendances.attendance_date', '<=', Request::get('end_attendance_date'));
         }
         $records = $records->orderBy('student_attendances.id', 'desc')
             ->paginate(50);
@@ -116,5 +124,10 @@ class StudentAttendance extends Model
             ->where('student_attendances.student_id', $id)
             ->groupBy('student_attendances.class_id')
             ->get();
+    }
+
+    private static function isNotEmptyGet(string $key): bool
+    {
+        return !empty(Request::get($key));
     }
 }
