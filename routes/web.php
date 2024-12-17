@@ -8,6 +8,7 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ClassSubjectController;
 use App\Http\Controllers\ClassTimetableController;
+use App\Http\Controllers\CommunicateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ParentController;
@@ -119,6 +120,12 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('admin/attendance/student/save', [AttendanceController::class, 'attendanceStudentSubmit']);
     Route::get('admin/attendance/report', [AttendanceController::class, 'attendanceReport']);
 
+    Route::get('admin/communicate/notice_board', [CommunicateController::class, 'noticeBoard']);
+    Route::get('admin/communicate/notice_board/add', [CommunicateController::class, 'addNoticeBoard']);
+    Route::post('admin/communicate/notice_board/add', [CommunicateController::class, 'insertNoticeBoard']);
+    Route::get('admin/communicate/notice_board/edit/{id}', [CommunicateController::class, 'editNoticeBoard']);
+    Route::post('admin/communicate/notice_board/edit/{id}', [CommunicateController::class, 'updateNoticeBoard']);
+    Route::get('admin/communicate/notice_board/delete/{id}', [CommunicateController::class, 'deleteNoticeBoard']);
 
     Route::get('admin/account', [UserController::class, 'myAccount']);
     Route::post('admin/account', [UserController::class, 'updateMyAccountAdmin']);
