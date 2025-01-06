@@ -38,7 +38,7 @@ class NoticeBoard extends Model
         }
         if (!empty(Request::get('message_to'))) {
             $records = $records->join('notice_boards_messages', 'notice_boards_messages.notice_board_id', 'notice_boards.id');
-            $records = $records->where('notice_boards_messages.message_to', Request::get('message_to'));
+            $records = $records->where('notice_boards_messages.message_to', '=', Request::get('message_to'));
         }
         $records = $records->orderBy('notice_boards.id', 'desc')
             ->paginate(20);
@@ -49,6 +49,28 @@ class NoticeBoard extends Model
     public function getMessage()
     {
         return $this->hasMany(NoticeBoardsMessage::class, 'notice_board_id');
+    }
+
+    public static function getRecordUser($message_to)
+    {
+        $records = self::select('notice_boards.*', 'users.name as created_by_name')
+            ->join('users', 'users.id', 'notice_boards.created_by');
+        $records = $records->join('notice_boards_messages', 'notice_boards_messages.notice_board_id', 'notice_boards.id');
+        if (!empty(Request::get('title'))) {
+            $records = $records->where('notice_boards.title', 'like', '%' . trim(Request::get('title')) . '%');
+        }
+        if (!empty(Request::get('notice_date_from'))) {
+            $records = $records->where('notice_boards.notice_date', '>=', Request::get('notice_date_from'));
+        }
+        if (!empty(Request::get('notice_date_to'))) {
+            $records = $records->where('notice_boards.notice_date', '<=', Request::get('notice_date_to'));
+        }
+        $records = $records->where('notice_boards_messages.message_to', $message_to);
+        $records = $records->where('notice_boards.publish_date', '<=', date('Y-m-d'));
+        $records = $records->orderBy('notice_boards.id', 'desc')
+            ->paginate(20);
+
+        return $records;
     }
 
     public function getMessageToSingle($noticeBoardId, $messageTo)
