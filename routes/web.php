@@ -153,6 +153,8 @@ Route::group(['middleware' => 'teacher'], function () {
     Route::get('teacher/attendance/student', [AttendanceController::class, 'attendanceStudentTeacher']);
     Route::post('teacher/attendance/student/save', [AttendanceController::class, 'attendanceStudentSubmit']);
     Route::get('teacher/attendance/report', [AttendanceController::class, 'attendanceReportTeacher']);
+
+    Route::get('teacher/my_notice_board', [CommunicateController::class, 'myNoticeBoardTeacher']);
 });
 
 // Student position middleware
