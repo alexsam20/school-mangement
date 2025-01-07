@@ -65,9 +65,9 @@ class NoticeBoard extends Model
         if (!empty(Request::get('notice_date_to'))) {
             $records = $records->where('notice_boards.notice_date', '<=', Request::get('notice_date_to'));
         }
-        $records = $records->where('notice_boards_messages.message_to', $message_to);
-        $records = $records->where('notice_boards.publish_date', '<=', date('Y-m-d'));
-        $records = $records->orderBy('notice_boards.id', 'desc')
+        $records = $records->where('notice_boards_messages.message_to', $message_to)
+            ->where('notice_boards.publish_date', '<=', date('Y-m-d'))
+            ->orderBy('notice_boards.id', 'desc')
             ->paginate(20);
 
         return $records;
